@@ -10,11 +10,14 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "lib": ["es2017", "dom"],
+    "lib": ["es2019", "es2017", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@team-apollo-forms/core": ["libs/core/src/index.ts"],
+      "@team-apollo-forms/chakra-ui": ["libs/chakra-ui/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

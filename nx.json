@@ -29,6 +29,12 @@
     "builder-e2e": {
       "tags": [],
       "implicitDependencies": ["builder"]
+    },
+    "core": {
+      "tags": []
+    },
+    "chakra-ui": {
+      "tags": []
     }
   }
 }
