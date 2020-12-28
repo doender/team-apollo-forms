@@ -12,7 +12,7 @@ export interface DynamicFormProps {
     };
     UiControls: FormUiControls;
     selectedField?: FormField | PlaceholderBlock;
-    onSelectField: (formField: FormField | PlaceholderBlock, sectionIdx: number, fieldIdx: number) => void;
+    onSelectField?: (formField: FormField | PlaceholderBlock, sectionIdx: number, fieldIdx: number) => void;
 }
 
 const DynamicForm: React.FC<DynamicFormProps> = ({ formDefinition, placeholders, UiControls, selectedField, onSelectField }) => {
@@ -76,7 +76,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({ formDefinition, placeholders,
                                 UiControls={UiControls}
                                 form={props}
                                 placeholders={placeholders}
-                                onFocus={(field, fieldIndex) => onSelectField(field, sectionIndex, fieldIndex)}
+                                onFocus={(field, fieldIndex) => onSelectField && onSelectField(field, sectionIndex, fieldIndex)}
                                 section={formDefinition.sections[sectionIndex]}
                             />
                         )}

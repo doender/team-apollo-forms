@@ -18,10 +18,6 @@ export const Builder: FC = () => {
         fieldIdx: number;
     }>();
 
-    useEffect(() => {
-        console.log('Selected index:', selectedField);
-    }, [selectedField]);
-
     // Set selected field
     useEffect(() => {
         if (!formDef || selectedField) return;
@@ -41,8 +37,7 @@ export const Builder: FC = () => {
     const addQuestion = (type: QuestionType, sectionIdx?: number, fieldIdx?: number) => {
         setFormDef((formDef) =>
             produce(formDef, (newFormDef) => {
-                const newField: FormField = createQuestion(type);
-                console.log(type, sectionIdx, fieldIdx);
+                const newField = createQuestion(type);
                 sectionIdx = sectionIdx != null ? sectionIdx : formDef.sections.length - 1;
                 fieldIdx = fieldIdx != null ? fieldIdx + 1 : formDef.sections[sectionIdx].fields.length - 1;
                 newFormDef.sections[sectionIdx].fields.splice(fieldIdx, 0, newField);

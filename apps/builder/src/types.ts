@@ -1,4 +1,12 @@
-import { FormField, PlaceholderBlock, TextInputFormField } from '@team-apollo-forms/core';
+import {
+    FormField,
+    LikertInputFormField,
+    NumberInputFormField,
+    PlaceholderBlock,
+    RadioTextInputFormField,
+    TextAreaFormField,
+    TextInputFormField,
+} from '@team-apollo-forms/core';
 import nanoid from './utils/nanoid';
 
 export enum QuestionType {
@@ -56,8 +64,13 @@ export const mapFormFieldToQuestionType = (field: FormField | PlaceholderBlock):
     return undefined;
 };
 
-export const createQuestion = (questionType: QuestionType): FormField => {
+export const createQuestion = (questionType: QuestionType | BlockType): FormField | PlaceholderBlock => {
     const id = nanoid();
+
+    if (questionType === BlockType.PLACEHOLDER) {
+        return { type: 'placeholder', id };
+    }
+
     const type = 'formField';
     if (questionType === QuestionType.EMAIL) {
         return {
@@ -67,11 +80,45 @@ export const createQuestion = (questionType: QuestionType): FormField => {
             validationType: 'string',
             validations: [{ type: 'email', params: [] }],
         } as TextInputFormField;
+    } else if (questionType === QuestionType.LONG_TEXT) {
+        return {
+            type,
+            id,
+            control: 'textArea',
+            validationType: 'string',
+        } as TextAreaFormField;
+    } else if (questionType === QuestionType.SHORT_TEXT) {
+        return {
+            type,
+            id,
+            control: 'textInput',
+            validationType: 'string',
+        } as TextInputFormField;
+    } else if (questionType === QuestionType.MULTIPLE_CHOICE) {
+        return {
+            type,
+            id,
+            control: 'radioText',
+            validationType: 'string',
+            options: [
+                { label: 'Yes', value: 'yes' },
+                { label: 'No', value: 'no' },
+            ],
+        } as RadioTextInputFormField;
+    } else if (questionType === QuestionType.NUMBER) {
+        return {
+            type,
+            id,
+            control: 'numberInput',
+            validationType: 'number',
+        } as NumberInputFormField;
+    } else if (questionType === QuestionType.OPINION_SCALE) {
+        return {
+            type,
+            id,
+            control: 'likert5',
+            validationType: 'number',
+            anchorLabels: ['Disagree', 'Agree'],
+        } as LikertInputFormField;
     }
-    return {
-        type,
-        id,
-        control: 'textInput',
-        validationType: 'string',
-    };
 };

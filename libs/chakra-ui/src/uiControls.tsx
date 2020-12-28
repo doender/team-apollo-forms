@@ -7,6 +7,7 @@ import {
     FormErrorMessage,
     FormLabel,
     Input,
+    NumberDecrementStepper,
     NumberIncrementStepper,
     NumberInput,
     NumberInputField,
@@ -72,7 +73,7 @@ export const ChakraUiControls: FormUiControls = {
                 <NumberInputField />
                 <NumberInputStepper>
                     <NumberIncrementStepper />
-                    <NumberIncrementStepper />
+                    <NumberDecrementStepper />
                 </NumberInputStepper>
             </NumberInput>
         );

@@ -17,8 +17,8 @@ export const DynamicFormInput: React.FC<DynamicFormInputProps> = ({ item, field,
     }
 
     if (item.control === 'numberInput') {
-        const min = item.validations!.find((val) => val.type === 'min')?.params[0] as number;
-        const max = item.validations!.find((val: FormFieldValidation<number>) => val.type === 'max')?.params[0] as number;
+        const min = item.validations?.find((val) => val.type === 'min')?.params[0] as number;
+        const max = item.validations?.find((val) => val.type === 'max')?.params[0] as number;
         return (
             <UiControls.NumberInput field={field} form={form} placeholder={item.placeholder} min={min || -Infinity} max={max || Infinity} />
         );
