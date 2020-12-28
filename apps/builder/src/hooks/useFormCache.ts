@@ -1,41 +1,34 @@
 import { FormDefinition } from '@team-apollo-forms/core';
 import { useEffect, useState } from 'react';
 
+const CACHE_NAME = 'json-cache';
+const FORM_URL = '/myform';
+
 export const storeForm = async (data: FormDefinition) => {
-    const cache = await caches.open('json-cache');
-    await cache.put(
-        '/myform',
-        new Response(JSON.stringify(data), {
-            headers: {
-                'content-type': 'application/json',
-            },
-        })
-    );
+    const cache = await caches.open(CACHE_NAME);
+    await cache.put(FORM_URL, new Response(JSON.stringify(data), { headers: { 'content-type': 'application/json' } }));
 };
 
 export const getForm = async () => {
-    const cache = await caches.open('json-cache');
-    return cache.match('/myform');
+    const cache = await caches.open(CACHE_NAME);
+    return cache.match(FORM_URL);
 };
 
 const useFormCache = () => {
     const [formDef, setFormDef] = useState<FormDefinition>();
 
-    // Store form on cache change
+    // Store form in cache on change
     useEffect(() => {
         if (!formDef) return;
         storeForm(formDef);
     }, [formDef]);
 
-    // Initialize form to default
+    // Initialize form from cache
     useEffect(() => {
         getForm()
             .then((result) => result.json())
-            .then((json) => {
-                console.log('JSON:', json);
-                setFormDef(json);
-            })
-            .catch((err) => {
+            .then((json) => setFormDef(json))
+            .catch((_) => {
                 setFormDef({
                     intro: null,
                     outro: null,
