@@ -1,5 +1,5 @@
 import { Box, Button, FormControl, FormLabel, Heading, HStack, Switch, Text } from '@chakra-ui/react';
-import { FormField, FormFieldValidation, PlaceholderBlock } from '@team-apollo-forms/core';
+import { FormField, FormFieldValidation, LikertInputFormField, PlaceholderBlock } from '@team-apollo-forms/core';
 import * as React from 'react';
 import { FC, useEffect, useState } from 'react';
 import { mapFormFieldToQuestionType, questionMenuOptions } from '../types';
@@ -17,6 +17,8 @@ interface FormModel {
     description: string | undefined;
     label: string;
     isMultiple?: boolean;
+    anchorLabelLeft?: string;
+    anchorLabelRight?: string;
 }
 
 const mapFieldToFormValues = (field: FormField): FormModel => {
@@ -30,6 +32,11 @@ const mapFieldToFormValues = (field: FormField): FormModel => {
 
     if (field.control === 'checkboxText' || field.control === 'radioText') {
         model.isMultiple = field.control === 'checkboxText';
+    }
+
+    if (field.control === 'likert5') {
+        model.anchorLabelLeft = field.anchorLabels[0];
+        model.anchorLabelRight = field.anchorLabels[1];
     }
     return model;
 };
@@ -56,6 +63,13 @@ const mapFormValuesToField = (field: FormField, values: FormModel): FormField =>
         const validationType = values.isMultiple ? 'array' : 'string';
         newField.control = control;
         newField.validationType = validationType;
+    }
+
+    if (values.anchorLabelLeft != null) {
+        (newField as LikertInputFormField).anchorLabels = [values.anchorLabelLeft, (newField as LikertInputFormField).anchorLabels[1]];
+    }
+    if (values.anchorLabelRight != null) {
+        (newField as LikertInputFormField).anchorLabels = [(newField as LikertInputFormField).anchorLabels[0], values.anchorLabelRight];
     }
 
     return newField;
@@ -151,6 +165,24 @@ const FieldEditor: FC<FieldEditorProps> = ({ field, setField, deleteField }) => 
                                 colorScheme="primary"
                                 isChecked={formValues.isMultiple}
                                 onChange={() => updateFormValue('isMultiple', !formValues.isMultiple)}
+                            />
+                        </FormControl>
+                    )}
+
+                    {formValues.anchorLabelLeft != null && (
+                        <FormControl my={4} pb={4} borderBottomWidth={1}>
+                            <FormLabel mb={2} htmlFor="required">
+                                Anchors
+                            </FormLabel>
+                            <DebouncedTextArea
+                                value={formValues.anchorLabelLeft}
+                                placeholder="Type your description here"
+                                onChange={(e) => updateFormValue('anchorLabelLeft', e.target.value)}
+                            />
+                            <DebouncedTextArea
+                                value={formValues.anchorLabelRight}
+                                placeholder="Type your description here"
+                                onChange={(e) => updateFormValue('anchorLabelRight', e.target.value)}
                             />
                         </FormControl>
                     )}
