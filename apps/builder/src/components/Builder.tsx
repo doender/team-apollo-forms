@@ -1,4 +1,4 @@
-import { Badge, Box, Button, Container, HStack, Image, Text, VStack } from '@chakra-ui/react';
+import { Box, Button, Container, Heading, HStack, Image, VStack } from '@chakra-ui/react';
 import { ChakraUiControls } from '@team-apollo-forms/chakra-ui';
 import { DynamicForm, FormField, PlaceholderBlock } from '@team-apollo-forms/core';
 import { produce } from 'immer';
@@ -114,11 +114,10 @@ export const Builder: FC = () => {
     return (
         <VStack width="100vw" height="100vh" spacing={0}>
             <HStack h="60px" bg="white" w="100%" borderBottomWidth={1} alignItems="center" spacing="auto">
-                <VStack ml={4} spacing={0}>
-                    <Badge m={0} fontSize="0.7rem" colorScheme="teal" mb={-1}>
-                        Team Apollo
-                    </Badge>
-                    <Text fontWeight="bold">Form Builder</Text>
+                <VStack ml={4} spacing={0} alignItems="flex-start">
+                    <Heading size="md" color="gray.600">
+                        Form Builder
+                    </Heading>
                 </VStack>
                 <Button m={2} marginLeft="auto" variant="outline" onClick={exportToJson}>
                     Export to JSON
