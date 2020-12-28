@@ -4,7 +4,6 @@ import React, { FC } from 'react';
 import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
 import { BlockType, QuestionType } from '../types';
 import QuestionAddButton from './QuestionAddButton';
-import QuestionSelectMenu from './QuestionSelectionMenu';
 import ShortFieldEditor from './ShortFieldEditor';
 
 export interface FieldListProps {
@@ -56,7 +55,7 @@ const FieldList: FC<FieldListProps> = ({ formDef, addQuestion, onDragEnd, select
                     ))}
                 </DragDropContext>
             </Box>
-            <QuestionSelectMenu m={4} onSelect={(type) => addQuestion(type)} />
+            {/* <QuestionSelectMenu m={4} onSelect={(type) => addQuestion(type)} /> */}
         </>
     );
 };

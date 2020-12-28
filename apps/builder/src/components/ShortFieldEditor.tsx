@@ -1,7 +1,6 @@
 import { Box, HStack, Text, Textarea } from '@chakra-ui/react';
 import { FormField, PlaceholderBlock } from '@team-apollo-forms/core';
-import * as React from 'react';
-import { forwardRef } from 'react';
+import React, { forwardRef, useEffect, useRef } from 'react';
 import ResizeTextarea from 'react-textarea-autosize';
 import { mapFormFieldToQuestionType } from '../types';
 import DebouncedInput from './DebouncedInput';
@@ -16,12 +15,17 @@ export interface ShortFieldEditorProps {
 }
 
 const ShortFieldEditor: any = forwardRef(({ field, draggableProps, dragHandleProps, setField, isSelected }: any, ref) => {
+    const inputRef = useRef<HTMLInputElement>();
+    useEffect(() => {
+        const elem = inputRef.current;
+        if (isSelected && elem) {
+            elem.focus();
+        }
+    }, [isSelected]);
     return (
         <Box ref={ref} {...draggableProps}>
             <HStack
                 alignItems="flex-start"
-                // borderWidth={2}
-
                 shadow={isSelected ? 'outline' : ''}
                 onClick={() => setField(field)}
                 p={4}
@@ -37,6 +41,7 @@ const ShortFieldEditor: any = forwardRef(({ field, draggableProps, dragHandlePro
                         debounceTime={300}
                         component={Textarea}
                         minH="unset"
+                        ref={inputRef}
                         overflow="hidden"
                         w="100%"
                         resize="none"

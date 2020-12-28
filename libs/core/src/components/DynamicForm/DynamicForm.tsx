@@ -56,7 +56,9 @@ const DynamicForm: React.FC<DynamicFormProps> = ({ formDefinition, placeholders,
         >
             {(props) => (
                 <FormikForm>
-                    {<UiControls.Progress value={sectionIndex + 1} max={formDefinition.sections.length} />}
+                    {formDefinition.sections.length > 1 && (
+                        <UiControls.Progress value={sectionIndex + 1} max={formDefinition.sections.length} />
+                    )}
                     <div style={{ paddingTop: '2rem', paddingBottom: '2rem' }}>
                         {onIntroScreen(sectionIndex) && (
                             <div style={{ paddingLeft: '2rem', paddingRight: '2rem' }}>
