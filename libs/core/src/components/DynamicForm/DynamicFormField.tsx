@@ -11,7 +11,7 @@ const DynamicFormField: React.FC<{ item: FormField; UiControls: FormUiControls; 
     onFocus,
 }) => {
     const validations: FormFieldValidation<any>[] = (item.type === 'formField' ? item.validations : undefined) || [];
-    const isRequired = validations.find(val => val.type === 'required') != null;
+    const isRequired = validations.find((val) => val.type === 'required') != null;
     return (
         <>
             <Field name={item.id}>

@@ -4,7 +4,7 @@ import { FC } from 'react';
 import ResizeTextarea from 'react-textarea-autosize';
 import DebouncedInput from './DebouncedInput';
 
-const DebouncedTextArea: FC<{ value: any; onChange: any }> = ({ value, onChange }) => {
+const DebouncedTextArea: FC<{ value: any; onChange: any; placeholder?: string }> = ({ value, onChange, placeholder }) => {
     return (
         <DebouncedInput
             debounceTime={300}
@@ -16,6 +16,7 @@ const DebouncedTextArea: FC<{ value: any; onChange: any }> = ({ value, onChange 
             w="100%"
             transition="height none"
             minRows={1}
+            placeholder={placeholder}
             wordBreak="break-word"
             p={4}
             as={ResizeTextarea}

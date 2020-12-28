@@ -33,6 +33,7 @@
     "@emotion/react": "11.0.0",
     "@emotion/styled": "11.0.0",
     "core-js": "^3.6.5",
+    "dexie": "^3.0.3",
     "document-register-element": "1.13.1",
     "focus-visible": "^5.2.0",
     "formik": "^2.2.6",

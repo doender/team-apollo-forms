@@ -25,7 +25,7 @@ const DebouncedInput: FC<DebouncedInputProps & TextareaProps & { minRows: number
     }, [defaultValue]);
 
     const debouncedSave = useCallback(
-        debounce(nextValue => onChange(nextValue), debounceTime),
+        debounce((nextValue) => onChange(nextValue), debounceTime),
         [defaultValue, onChange]
     );
 

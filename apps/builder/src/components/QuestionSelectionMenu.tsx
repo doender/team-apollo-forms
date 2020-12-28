@@ -34,7 +34,7 @@ const QuestionSelectMenu: FC<{ trigger?: any; onSelect: (type: QuestionType | Bl
                     <PopoverContent>
                         <PopoverBody p={0}>
                             <div>
-                                {questionMenuOptions.map(option => (
+                                {questionMenuOptions.map((option) => (
                                     <HStack
                                         py={2}
                                         px={2}
