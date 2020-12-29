@@ -5,13 +5,16 @@ import { produce } from 'immer';
 import React, { FC, useEffect, useState } from 'react';
 import { DropResult } from 'react-beautiful-dnd';
 import useFormCache from '../hooks/useFormCache';
+import useFormImportExport from '../hooks/useFormImport';
 import { image1 } from '../img';
 import { createQuestion, QuestionType } from '../types';
 import FieldEditor from './FieldEditor';
 import FieldList from './FieldList';
+import FileUploader from './FileUploader';
 
 export const Builder: FC = () => {
     const { formDef, setFormDef } = useFormCache();
+    const { importForm, exportForm } = useFormImportExport(formDef, setFormDef);
     const [selectedField, setSelectedField] = useState<{
         field: FormField | PlaceholderBlock;
         sectionIdx: number;
@@ -29,10 +32,6 @@ export const Builder: FC = () => {
             });
         }
     }, [formDef]);
-
-    const exportToJson = () => {
-        console.log(JSON.stringify(formDef, null, 4));
-    };
 
     const addQuestion = (type: QuestionType, sectionIdx?: number, fieldIdx?: number) => {
         setFormDef((formDef) =>
@@ -114,9 +113,21 @@ export const Builder: FC = () => {
                         Form Builder
                     </Heading>
                 </VStack>
-                <Button m={2} marginLeft="auto" variant="outline" onClick={exportToJson}>
-                    Export to JSON
-                </Button>
+
+                <HStack spacing={2} alignItems="center" mr={2}>
+                    <FileUploader
+                        onFilesSelected={importForm}
+                        accept="application/json"
+                        component={({ onClick }) => (
+                            <Button marginLeft="auto" variant="outline" onClick={onClick}>
+                                Import
+                            </Button>
+                        )}
+                    />
+                    <Button marginLeft="auto" variant="outline" onClick={exportForm}>
+                        Export
+                    </Button>
+                </HStack>
             </HStack>
             <HStack flex="1" width="100%" alignItems="flex-start" height="100%" maxH="calc(100vh - 60px)" spacing={0}>
                 <Box flex="1.5" height="100%" overflow="scroll" borderRightWidth={1}>
@@ -150,6 +161,16 @@ export const Builder: FC = () => {
                                         <Image maxH={375} objectFit="cover" width="100%" objectPosition="top" src={image1} />
                                     ),
                                     placeholder2: () => <div>Hello there</div>,
+                                }}
+                                onAfterSubmit={() => <Heading>Bedankt!</Heading>}
+                                onSubmit={(values) => {
+                                    console.log('Submitting values:', values);
+                                    return new Promise((resolve, reject) => {
+                                        setTimeout(() => {
+                                            console.log('Done!');
+                                            resolve();
+                                        }, 1000);
+                                    });
                                 }}
                             />
                         </Box>

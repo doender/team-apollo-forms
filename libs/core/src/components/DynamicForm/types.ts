@@ -112,8 +112,6 @@ export interface FormSection {
 }
 
 export type FormDefinition = {
-    intro: { heading: string; text: string };
-    outro: { heading: string; text: string };
     sections: FormSection[];
 };
 

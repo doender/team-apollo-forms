@@ -65,7 +65,7 @@ export const mapFormFieldToQuestionType = (field: FormField | PlaceholderBlock):
 };
 
 export const createQuestion = (questionType: QuestionType | BlockType): FormField | PlaceholderBlock => {
-    const id = nanoid();
+    const id = `field-${nanoid()}`;
 
     if (questionType === BlockType.PLACEHOLDER) {
         return { type: 'placeholder', id };
@@ -111,6 +111,10 @@ export const createQuestion = (questionType: QuestionType | BlockType): FormFiel
             id,
             control: 'numberInput',
             validationType: 'number',
+            validations: [
+                { type: 'min', params: [0] },
+                { type: 'max', params: [1000] },
+            ],
         } as NumberInputFormField;
     } else if (questionType === QuestionType.OPINION_SCALE) {
         return {

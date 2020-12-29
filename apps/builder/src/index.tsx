@@ -14,7 +14,7 @@ const theme = extendTheme({
         },
     },
     shadows: {
-        outline: '0 0 0 3px #81E6D9',
+        outline: '0 0 0 2px #4FD1C5',
     },
     colors: {
         primary: {

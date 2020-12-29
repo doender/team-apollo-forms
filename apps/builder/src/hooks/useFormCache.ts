@@ -30,8 +30,6 @@ const useFormCache = () => {
             .then((json) => setFormDef(json))
             .catch((_) => {
                 setFormDef({
-                    intro: null,
-                    outro: null,
                     sections: [
                         {
                             fields: [],

@@ -13,9 +13,19 @@ export interface DynamicFormProps {
     UiControls: FormUiControls;
     selectedField?: FormField | PlaceholderBlock;
     onSelectField?: (formField: FormField | PlaceholderBlock, sectionIdx: number, fieldIdx: number) => void;
+    onAfterSubmit: (form: FormikProps<any>) => React.ReactChild;
+    onSubmit: (values: { [key: string]: any }) => Promise<void>;
 }
 
-const DynamicForm: React.FC<DynamicFormProps> = ({ formDefinition, placeholders, UiControls, selectedField, onSelectField }) => {
+const DynamicForm: React.FC<DynamicFormProps> = ({
+    formDefinition,
+    placeholders,
+    UiControls,
+    selectedField,
+    onSelectField,
+    onSubmit,
+    onAfterSubmit,
+}) => {
     const [sectionIndex, setSectionIndex] = useState(0);
 
     useEffect(() => {
@@ -45,13 +55,10 @@ const DynamicForm: React.FC<DynamicFormProps> = ({ formDefinition, placeholders,
         <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
-            onSubmit={(values, actions) => {
-                console.log('values', values);
-                console.log('actions', actions);
-                setTimeout(() => {
-                    actions.setSubmitting(false);
-                    setSectionIndex((i) => i + 1);
-                }, 1000);
+            onSubmit={async (values, actions) => {
+                await onSubmit(values);
+                actions.setSubmitting(false);
+                setSectionIndex((i) => i + 1);
             }}
         >
             {(props) => (
@@ -60,19 +67,6 @@ const DynamicForm: React.FC<DynamicFormProps> = ({ formDefinition, placeholders,
                         <UiControls.Progress value={sectionIndex + 1} max={formDefinition.sections.length} />
                     )}
                     <div style={{ paddingTop: '2rem', paddingBottom: '2rem' }}>
-                        {onIntroScreen(sectionIndex) && (
-                            <div style={{ paddingLeft: '2rem', paddingRight: '2rem' }}>
-                                <h1 style={{ fontSize: '1.875rem', fontWeight: 'bold', lineHeight: 1.2 }}>
-                                    {formDefinition.intro?.heading}
-                                </h1>
-                                <div
-                                    style={{ marginTop: '2rem', fontSize: '1.125rem' }}
-                                    dangerouslySetInnerHTML={{
-                                        __html: formDefinition.intro?.text,
-                                    }}
-                                ></div>
-                            </div>
-                        )}
                         {onSectionScreen(sectionIndex, formDefinition) && (
                             <DynamicFormSection
                                 UiControls={UiControls}
@@ -82,16 +76,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({ formDefinition, placeholders,
                                 section={formDefinition.sections[sectionIndex]}
                             />
                         )}
-                        {onOutroScreen(sectionIndex, formDefinition) && (
-                            <div style={{ padding: '24px' }}>
-                                <h1>{formDefinition.outro?.heading}</h1>
-                                <div
-                                    dangerouslySetInnerHTML={{
-                                        __html: formDefinition.outro?.text,
-                                    }}
-                                ></div>
-                            </div>
-                        )}
+                        {onOutroScreen(sectionIndex, formDefinition) && <div style={{ padding: '24px' }}>{onAfterSubmit(props)}</div>}
                     </div>
 
                     <div
@@ -114,7 +99,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({ formDefinition, placeholders,
                                     onClick={() => goToNextSection()}
                                     isDisabled={!canContinueToNextSection(formDefinition.sections[sectionIndex], props)}
                                 >
-                                    {onIntroScreen(sectionIndex) ? 'Starten' : 'Volgende'}
+                                    Volgende
                                 </UiControls.NextButton>
                             )}
                             {onLastSectionScreen(sectionIndex, formDefinition) && (
@@ -168,10 +153,6 @@ const canContinueToNextSection = (section: FormSection, form: FormikProps<any>) 
 
 const scrollToTop = () => {
     window.scrollTo({ top: 0 });
-};
-
-const onIntroScreen = (sectionIndex: number) => {
-    return sectionIndex === -1;
 };
 
 const onOutroScreen = (sectionIndex: number, formDef: FormDefinition) => {

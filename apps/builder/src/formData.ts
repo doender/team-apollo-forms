@@ -1,16 +1,6 @@
 import { FormDefinition } from '@team-apollo-forms/core';
 
 export const formData: FormDefinition = {
-    intro: {
-        heading: 'Beste Head,',
-        text:
-            'We werken alweer een tijdje vanuit huis en zijn benieuwd hoe jouw thuiswerk situatie is en of we ergens bij kunnen helpen. Door middel van een vragenlijst hopen we meer inzicht te krijgen in hoe het thuiswerken bij iedereen gaat.<br/><br/>Groeten,<br/>Thomas Houët',
-    },
-    outro: {
-        heading: 'Bedankt!',
-        text:
-            'Door jouw ervaring met ons te delen krijgen wij beter inzicht in de thuiswerk situatie van onze medewerkers. Wanneer wij directe aanleiding zien voor het verbeteren van je thuiswerkplek, zullen we contact met je opnemen.<br/><br/>Los van de werkplek en apparatuur is het belangrijk dat je voldoende lichaamsbeweging hebt tussen het werk door. Neem hier zeker de tijd voor!<br/><br/><i><b>Een thuiswerktip van Rens:</b><br/>“Probeer elk uur even een rondje te lopen te kletsen met een collega (digitaal) of een huisgenoot. In tegenstelling tot wat veel mensen denken vergroot dit juist je productiviteit en draagt het bij aan je werkplezier.”</i><br/><br/>Heb je vragen of opmerkingen? Neem gerust contact op!<br/><br/>Groeten,<br/>Thomas',
-    },
     sections: [
         {
             title: 'Jouw gegevens',
