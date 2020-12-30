@@ -1,11 +1,23 @@
 import { AddIcon } from '@chakra-ui/icons';
-import { Button, ChakraProps, HStack, Popover, PopoverBody, PopoverContent, PopoverTrigger, Portal, useDisclosure } from '@chakra-ui/react';
+import {
+    Box,
+    Button,
+    ChakraProps,
+    Divider,
+    HStack,
+    Popover,
+    PopoverBody,
+    PopoverContent,
+    PopoverTrigger,
+    Portal,
+    useDisclosure,
+} from '@chakra-ui/react';
 import * as React from 'react';
-import { FC, useState } from 'react';
+import { FC, ReactElement, useState } from 'react';
 import { BlockType, questionMenuOptions, QuestionSelectMenuOption, QuestionType } from '../types';
 import { QuestionTypeLabel } from './QuestionTypeLabel';
 
-const QuestionSelectMenu: FC<{ trigger?: any; onSelect: (type: QuestionType | BlockType) => void } & ChakraProps> = ({
+const QuestionSelectMenu: FC<{ trigger?: ReactElement; onSelect: (type: QuestionType | BlockType) => void } & ChakraProps> = ({
     onSelect,
     trigger,
     ...props
@@ -26,7 +38,7 @@ const QuestionSelectMenu: FC<{ trigger?: any; onSelect: (type: QuestionType | Bl
                         trigger
                     ) : (
                         <Button {...props} leftIcon={<AddIcon />} size="lg">
-                            Add question
+                            Add first question
                         </Button>
                     )}
                 </PopoverTrigger>
@@ -35,18 +47,20 @@ const QuestionSelectMenu: FC<{ trigger?: any; onSelect: (type: QuestionType | Bl
                         <PopoverBody p={0}>
                             <div>
                                 {questionMenuOptions.map((option) => (
-                                    <HStack
-                                        py={2}
-                                        px={2}
-                                        cursor="pointer"
-                                        key={option.value}
-                                        _hover={{ bg: 'gray.100' }}
-                                        onMouseOver={() => setSelected(option)}
-                                        onClick={() => selectOption(option.value)}
-                                    >
-                                        <QuestionTypeLabel type={option.value} />
-                                        <span>{option.name}</span>
-                                    </HStack>
+                                    <Box key={option.value}>
+                                        {option.value === 'section' && <Divider />}
+                                        <HStack
+                                            py={2}
+                                            px={2}
+                                            cursor="pointer"
+                                            _hover={{ bg: 'gray.100' }}
+                                            onMouseOver={() => setSelected(option)}
+                                            onClick={() => selectOption(option.value)}
+                                        >
+                                            <QuestionTypeLabel type={option.value} />
+                                            <span>{option.name}</span>
+                                        </HStack>
+                                    </Box>
                                 ))}
                             </div>
                         </PopoverBody>

@@ -3,7 +3,6 @@ import {
     Button,
     FormControl,
     FormLabel,
-    Heading,
     HStack,
     NumberDecrementStepper,
     NumberIncrementStepper,
@@ -55,7 +54,9 @@ const FieldEditor: FC<FieldEditorProps> = ({ field, setField, deleteField }) => 
 
     return (
         <Box mt={4} p={4}>
-            <Heading size="md">Field Settings</Heading>
+            <Text mb={4} color="gray.500" letterSpacing={1} fontWeight={700} textTransform="uppercase">
+                field settings
+            </Text>
 
             <HStack my={4} pb={4} borderBottomWidth={1}>
                 <QuestionTypeLabel type={type} />
@@ -67,6 +68,7 @@ const FieldEditor: FC<FieldEditorProps> = ({ field, setField, deleteField }) => 
                     <FormControl my={4} pb={4} borderBottomWidth={1}>
                         <FormLabel>Label</FormLabel>
                         <DebouncedTextArea
+                            bg="white"
                             value={formValues.label}
                             placeholder="Type your question here"
                             onChange={(e) => updateFormValue('label', e.target.value)}
@@ -88,6 +90,7 @@ const FieldEditor: FC<FieldEditorProps> = ({ field, setField, deleteField }) => 
 
                         {formValues.description !== undefined && (
                             <DebouncedTextArea
+                                bg="white"
                                 value={formValues.description}
                                 placeholder="Type your description here"
                                 onChange={(e) => updateFormValue('description', e.target.value)}
@@ -127,11 +130,13 @@ const FieldEditor: FC<FieldEditorProps> = ({ field, setField, deleteField }) => 
                                 Anchors
                             </FormLabel>
                             <DebouncedTextArea
+                                bg="white"
                                 value={formValues.anchorLabelLeft}
                                 placeholder="Type your description here"
                                 onChange={(e) => updateFormValue('anchorLabelLeft', e.target.value)}
                             />
                             <DebouncedTextArea
+                                bg="white"
                                 value={formValues.anchorLabelRight}
                                 placeholder="Type your description here"
                                 onChange={(e) => updateFormValue('anchorLabelRight', e.target.value)}

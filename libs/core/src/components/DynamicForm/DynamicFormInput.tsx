@@ -44,10 +44,7 @@ export const DynamicFormInput: React.FC<DynamicFormInputProps> = ({ item, field,
     if (item.control === 'slider') {
         const min = item.validations!.find((val) => val.type === 'min')?.params[0] as number;
         const max = item.validations!.find((val: FormFieldValidation<number>) => val.type === 'max')?.params[0] as number;
-        if (min == null || max == null) {
-            throw new Error('Slider input should have a min and max validation');
-        }
-        return <UiControls.SliderInput field={field} form={form} min={min} max={max} />;
+        return <UiControls.SliderInput field={field} form={form} min={min || 0} max={max || 1000} />;
     }
 
     if (item.control === 'switch') {

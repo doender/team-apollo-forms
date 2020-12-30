@@ -1,7 +1,7 @@
 import { Badge } from '@chakra-ui/react';
 import * as React from 'react';
 import { FC } from 'react';
-import { FaAlignLeft, FaAt, FaExpand, FaHeart, FaListUl, FaPlus, FaRulerHorizontal, FaSortNumericDown } from 'react-icons/fa';
+import { FaAt, FaExpand, FaFont, FaHeart, FaListUl, FaParagraph, FaPlus, FaSortNumericDown } from 'react-icons/fa';
 import { BlockType, QuestionType } from '../types';
 
 const getColorAndIcon = (type?: QuestionType | BlockType): { color: string; icon: React.ReactNode } => {
@@ -10,7 +10,7 @@ const getColorAndIcon = (type?: QuestionType | BlockType): { color: string; icon
         case QuestionType.EMAIL:
             return { color: 'orange', icon: <FaAt size={size} /> };
         case QuestionType.LONG_TEXT:
-            return { color: 'cyan', icon: <FaAlignLeft size={size} /> };
+            return { color: 'cyan', icon: <FaParagraph size={size} /> };
         case QuestionType.MULTIPLE_CHOICE:
             return { color: 'purple', icon: <FaListUl size={size} /> };
         case QuestionType.NUMBER:
@@ -18,7 +18,7 @@ const getColorAndIcon = (type?: QuestionType | BlockType): { color: string; icon
         case QuestionType.OPINION_SCALE:
             return { color: 'pink', icon: <FaHeart size={size} /> };
         case QuestionType.SHORT_TEXT:
-            return { color: 'blue', icon: <FaRulerHorizontal size={size} /> };
+            return { color: 'blue', icon: <FaFont size={size} /> };
         case BlockType.PLACEHOLDER:
             return { color: 'gray', icon: <FaExpand /> };
         default:

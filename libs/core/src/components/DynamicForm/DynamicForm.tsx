@@ -1,6 +1,7 @@
 import { Form as FormikForm, Formik, FormikProps } from 'formik';
 import React, { useEffect, useState } from 'react';
 import * as yup from 'yup';
+import { en, FormLocale, FormLocaleKey } from '../../locales';
 import DynamicFormSection from './DynamicFormSection';
 import { FormDefinition, FormField, FormSection, FormUiControls, isFormField, PlaceholderBlock } from './types';
 import { createYupSchema } from './yupSchemaCreator';
@@ -15,6 +16,7 @@ export interface DynamicFormProps {
     onSelectField?: (formField: FormField | PlaceholderBlock, sectionIdx: number, fieldIdx: number) => void;
     onAfterSubmit: (form: FormikProps<any>) => React.ReactChild;
     onSubmit: (values: { [key: string]: any }) => Promise<void>;
+    locale?: FormLocale;
 }
 
 const DynamicForm: React.FC<DynamicFormProps> = ({
@@ -25,6 +27,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
     onSelectField,
     onSubmit,
     onAfterSubmit,
+    locale,
 }) => {
     const [sectionIndex, setSectionIndex] = useState(0);
 
@@ -42,6 +45,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
     const fields = formDefinition.sections.map((s) => s.fields.filter(isFormField)).flat();
     const initialValues = getInitialValues(fields);
     const validationSchema = getValidationSchema(fields);
+    locale = locale || en;
 
     const goToNextSection = () => {
         setSectionIndex((i) => i + 1);
@@ -72,6 +76,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                                 UiControls={UiControls}
                                 form={props}
                                 placeholders={placeholders}
+                                locale={locale}
                                 onFocus={(field, fieldIndex) => onSelectField && onSelectField(field, sectionIndex, fieldIndex)}
                                 section={formDefinition.sections[sectionIndex]}
                             />
@@ -90,7 +95,9 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                     >
                         <div>
                             {onSectionScreen(sectionIndex, formDefinition) && (
-                                <UiControls.PrevButton onClick={() => goToPrevSection()}>Vorige</UiControls.PrevButton>
+                                <UiControls.PrevButton onClick={() => goToPrevSection()}>
+                                    {locale[FormLocaleKey.PREVIOUS]}
+                                </UiControls.PrevButton>
                             )}
                         </div>
                         <div>
@@ -99,12 +106,12 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                                     onClick={() => goToNextSection()}
                                     isDisabled={!canContinueToNextSection(formDefinition.sections[sectionIndex], props)}
                                 >
-                                    Volgende
+                                    {locale[FormLocaleKey.NEXT]}
                                 </UiControls.NextButton>
                             )}
                             {onLastSectionScreen(sectionIndex, formDefinition) && (
                                 <UiControls.SubmitButton isDisabled={!props.isValid} isLoading={props.isSubmitting}>
-                                    Verzend
+                                    {locale[FormLocaleKey.SUBMIT]}
                                 </UiControls.SubmitButton>
                             )}
                         </div>

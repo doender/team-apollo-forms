@@ -20,14 +20,13 @@ export enum QuestionType {
 
 export enum BlockType {
     PLACEHOLDER = 'placeholder',
-    WELCOME = 'welcome',
-    THANK_YOU = 'thank-you',
+    SECTION = 'section',
 }
 
-export type QuestionSelectMenuOption = {
+export interface QuestionSelectMenuOption {
     value: QuestionType | BlockType;
     name: string;
-};
+}
 
 export const questionMenuOptions: QuestionSelectMenuOption[] = [
     { name: 'Multiple choice', value: QuestionType.MULTIPLE_CHOICE },
@@ -37,6 +36,7 @@ export const questionMenuOptions: QuestionSelectMenuOption[] = [
     { name: 'Opinion scale', value: QuestionType.OPINION_SCALE },
     { name: 'Number', value: QuestionType.NUMBER },
     { name: 'Placeholder', value: BlockType.PLACEHOLDER },
+    { name: 'New Section', value: BlockType.SECTION },
 ];
 
 export const mapFormFieldToQuestionType = (field: FormField | PlaceholderBlock): QuestionType | BlockType | undefined => {

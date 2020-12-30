@@ -58,25 +58,26 @@ export const mapFormValuesToField = (field: FormField, values: FormModel): FormF
     if (values.isRequired && requiredValIdx == -1) {
         validations = [...validations, { type: 'required', params: [] }];
     } else if (!values.isRequired && requiredValIdx != -1) {
-        console.log(validations, requiredValIdx);
         validations = [...validations.slice(0, requiredValIdx), ...validations.slice(requiredValIdx + 1)];
     }
 
     if (values.min != null || values.minLength != null) {
         const minValIdx = validations.map((val) => val.type).findIndex((type) => type === 'min');
+        const minVal = values.min != null ? values.min : values.minLength;
         if (minValIdx === -1) {
-            validations.push({ type: 'min', params: [values.min || values.minLength] });
+            validations.push({ type: 'min', params: [minVal] });
         } else {
-            validations[minValIdx] = { type: 'min', params: [values.min || values.minLength] };
+            validations[minValIdx] = { type: 'min', params: [minVal] };
         }
     }
 
     if (values.max != null || values.maxLength != null) {
         const maxValIdx = validations.map((val) => val.type).findIndex((type) => type === 'max');
+        const maxVal = values.max != null ? values.max : values.maxLength;
         if (maxValIdx === -1) {
-            validations.push({ type: 'max', params: [values.max || values.maxLength] });
+            validations.push({ type: 'max', params: [maxVal] });
         } else {
-            validations[maxValIdx] = { type: 'max', params: [values.max || values.maxLength] };
+            validations[maxValIdx] = { type: 'max', params: [maxVal] };
         }
     }
 

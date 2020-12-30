@@ -1,14 +1,18 @@
-import { Textarea } from '@chakra-ui/react';
+import { ChakraProps, Textarea } from '@chakra-ui/react';
 import * as React from 'react';
 import { FC } from 'react';
 import ResizeTextarea from 'react-textarea-autosize';
 import DebouncedInput from './DebouncedInput';
 
-const DebouncedTextArea: FC<{ value: any; onChange: any; placeholder?: string }> = ({ value, onChange, placeholder }) => {
+const DebouncedTextArea: FC<{ value: any; onChange: any; placeholder?: string } & ChakraProps> = ({
+    value,
+    onChange,
+    placeholder,
+    ...props
+}) => {
     return (
         <DebouncedInput
             debounceTime={300}
-            bg="white"
             component={Textarea}
             minH="unset"
             overflow="hidden"
@@ -23,6 +27,7 @@ const DebouncedTextArea: FC<{ value: any; onChange: any; placeholder?: string }>
             variant="unstyled"
             value={value}
             onChange={onChange}
+            {...props}
         />
     );
 };

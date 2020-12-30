@@ -1,14 +1,15 @@
 import { Field, FieldProps } from 'formik';
 import React from 'react';
-import { capitalize } from '../utils/capitalize';
-import { renderTemplate } from '../utils/renderTemplate';
+import { FormLocale, renderErrorMsg } from '../../locales';
+import { renderTemplate } from '../../utils/renderTemplate';
 import { DynamicFormInput } from './DynamicFormInput';
 import { FormField, FormFieldValidation, FormUiControls } from './types';
 
-const DynamicFormField: React.FC<{ item: FormField; UiControls: FormUiControls; onFocus: () => void }> = ({
+const DynamicFormField: React.FC<{ item: FormField; UiControls: FormUiControls; onFocus: () => void; locale: FormLocale }> = ({
     item,
     UiControls,
     onFocus,
+    locale,
 }) => {
     const validations: FormFieldValidation<any>[] = (item.type === 'formField' ? item.validations : undefined) || [];
     const isRequired = validations.find((val) => val.type === 'required') != null;
@@ -23,7 +24,7 @@ const DynamicFormField: React.FC<{ item: FormField; UiControls: FormUiControls; 
                         isInvalid={!!meta.touched && !!meta.error}
                         label={item.label && renderTemplate(item.label, form.values)}
                         description={item.description && renderTemplate(item.description, form.values)}
-                        errorMsg={capitalize(meta.error)}
+                        errorMsg={renderErrorMsg(meta.error, locale)}
                     >
                         <DynamicFormInput item={item} field={field} form={form} UiControls={UiControls} />
                     </UiControls.FormField>

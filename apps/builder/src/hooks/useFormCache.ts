@@ -32,6 +32,7 @@ const useFormCache = () => {
                 setFormDef({
                     sections: [
                         {
+                            title: 'My New Form',
                             fields: [],
                         },
                     ],
