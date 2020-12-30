@@ -12,12 +12,14 @@ export interface FormModel {
     max?: number;
     minLength?: number;
     maxLength?: number;
+    id: string;
 }
 
 export const mapFieldToFormValues = (field: FormField): FormModel => {
     const validations: FormFieldValidation<any>[] = (field.type === 'formField' ? field.validations : undefined) || [];
     const isRequired = validations.find((val) => val.type === 'required') != null;
     const model: FormModel = {
+        id: field.id,
         isRequired,
         description: field.description,
         label: field.label || '',
@@ -51,6 +53,7 @@ export const mapFormValuesToField = (field: FormField, values: FormModel): FormF
 
     newField.description = values.description;
     newField.label = values.label;
+    newField.id = values.id;
 
     // Remove or add required validation
     let validations: FormFieldValidation<any>[] = field.validations != null ? [...field.validations] : [];

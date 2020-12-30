@@ -21,12 +21,26 @@ const DynamicFormField: React.FC<{ item: FormField; UiControls: FormUiControls; 
                         isRequired={isRequired}
                         onFocus={onFocus}
                         id={item.id}
+                        placeholder={item.placeholder}
+                        field={field}
+                        form={form}
                         isInvalid={!!meta.touched && !!meta.error}
                         label={item.label && renderTemplate(item.label, form.values)}
                         description={item.description && renderTemplate(item.description, form.values)}
                         errorMsg={renderErrorMsg(meta.error, locale)}
                     >
-                        <DynamicFormInput item={item} field={field} form={form} UiControls={UiControls} />
+                        <DynamicFormInput
+                            id={item.id}
+                            isRequired={isRequired}
+                            isInvalid={!!meta.touched && !!meta.error}
+                            label={item.label && renderTemplate(item.label, form.values)}
+                            description={item.description && renderTemplate(item.description, form.values)}
+                            errorMsg={renderErrorMsg(meta.error, locale)}
+                            item={item}
+                            field={field}
+                            form={form}
+                            UiControls={UiControls}
+                        />
                     </UiControls.FormField>
                 )}
             </Field>

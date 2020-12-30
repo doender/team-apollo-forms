@@ -14,6 +14,7 @@ import {
 } from '@chakra-ui/react';
 import { ChakraUiControls } from '@team-apollo-forms/chakra-ui';
 import { DynamicForm, FormDefinition, FormField, PlaceholderBlock } from '@team-apollo-forms/core';
+import { MaterialUiControls } from '@team-apollo-forms/material-ui';
 import { en, nl } from 'libs/core/src/locales';
 import React, { FC, useState } from 'react';
 import { FaCog } from 'react-icons/fa';
@@ -26,7 +27,7 @@ interface FormPreviewProps {
 
 const uiControlsMap = {
     chakra: ChakraUiControls,
-    material: ChakraUiControls,
+    material: MaterialUiControls,
     ant: ChakraUiControls,
 };
 
@@ -59,9 +60,9 @@ const FormPreview: FC<FormPreviewProps> = ({ formDef, selectedField, setSelected
                                 <MenuItemOption value="material" onClick={() => setUI('material')}>
                                     Material UI
                                 </MenuItemOption>
-                                <MenuItemOption value="ant" onClick={() => setUI('ant')}>
+                                {/* <MenuItemOption value="ant" onClick={() => setUI('ant')}>
                                     Ant Design
-                                </MenuItemOption>
+                                </MenuItemOption> */}
                             </MenuOptionGroup>
                             <MenuDivider />
                             <MenuOptionGroup defaultValue={locale} title="Locale" type="radio">
@@ -83,7 +84,7 @@ const FormPreview: FC<FormPreviewProps> = ({ formDef, selectedField, setSelected
                         onSelectField={(field, sectionIdx, fieldIdx) => setSelectedField({ field, sectionIdx, fieldIdx })}
                         onAfterSubmit={() => <Heading>Bedankt!</Heading>}
                         onSubmit={(values) => {
-                            console.log('Submitting values:', values);
+                            console.log('Submitting values:', JSON.stringify(values));
                             return new Promise((resolve, reject) => {
                                 setTimeout(() => {
                                     console.log('Done!');

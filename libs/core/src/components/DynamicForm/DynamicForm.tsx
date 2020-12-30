@@ -59,6 +59,9 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
         <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
+            validateOnMount={true}
+            enableReinitialize={true}
+            isInitialValid={false}
             onSubmit={async (values, actions) => {
                 await onSubmit(values);
                 actions.setSubmitting(false);
@@ -155,7 +158,7 @@ const getValidationSchema = (fields: FormField[]) => {
 const canContinueToNextSection = (section: FormSection, form: FormikProps<any>) => {
     if (section == null) return true;
     const fieldIds = section.fields.filter(isFormField).map((field) => field.id);
-    return form.dirty && !Object.keys(form.errors).some((fieldId) => fieldIds.includes(fieldId));
+    return !Object.keys(form.errors).some((fieldId) => fieldIds.includes(fieldId));
 };
 
 const scrollToTop = () => {

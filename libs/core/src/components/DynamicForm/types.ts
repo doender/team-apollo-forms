@@ -135,30 +135,27 @@ export type PlaceholderFnsFromDef<T extends DeepReadonly<FormDefinition>> = {
     ) => ReactNode;
 };
 
+interface BaseFormUiControlProps {
+    isInvalid: boolean;
+    label?: string;
+    id: string;
+    description?: string;
+    errorMsg: string;
+    placeholder: string | undefined;
+    isRequired: boolean;
+    field: FieldInputProps<any>;
+    form: FormikProps<any>;
+}
+
 export interface FormUiControls {
-    FormField: React.FC<{
-        isInvalid: boolean;
-        label?: string;
-        id: string;
-        description?: string;
-        errorMsg: string;
-        isRequired: boolean;
-        onFocus: () => void;
-    }>;
-    TextInput: React.FC<{ field: FieldInputProps<any>; form: FormikProps<any>; placeholder: string | undefined; isRequired?: boolean }>;
-    NumberInput: React.FC<{
-        field: FieldInputProps<any>;
-        form: FormikProps<any>;
-        placeholder: string | undefined;
-        min: number;
-        max: number;
-    }>;
-    LikertInput: React.FC<{ field: FieldInputProps<any>; form: FormikProps<any>; anchorLabels: [string, string] }>;
-    RadioTextInput: React.FC<{ field: FieldInputProps<any>; form: FormikProps<any>; options: Option[] }>;
-    CheckboxTextInput: React.FC<{ field: FieldInputProps<any>; form: FormikProps<any>; options: Option[] }>;
-    SliderInput: React.FC<{ field: FieldInputProps<any>; form: FormikProps<any>; min: number; max: number }>;
-    TextareaInput: React.FC<{ field: FieldInputProps<any>; form: FormikProps<any>; placeholder: string | undefined }>;
-    SwitchInput: React.FC<{ field: FieldInputProps<any>; form: FormikProps<any> }>;
+    FormField: React.FC<BaseFormUiControlProps & { onFocus: () => void }>;
+    TextInput: React.FC<BaseFormUiControlProps>;
+    NumberInput: React.FC<BaseFormUiControlProps & { min: number; max: number }>;
+    LikertInput: React.FC<BaseFormUiControlProps & { anchorLabels: [string, string] }>;
+    RadioTextInput: React.FC<BaseFormUiControlProps & { options: Option[] }>;
+    CheckboxTextInput: React.FC<BaseFormUiControlProps & { options: Option[] }>;
+    SliderInput: React.FC<BaseFormUiControlProps & { min: number; max: number }>;
+    TextareaInput: React.FC<BaseFormUiControlProps>;
 
     Progress: React.FC<{ value: number; max: number }>;
     PrevButton: React.FC<{ onClick: () => void }>;

@@ -20,7 +20,6 @@ import {
     SliderThumb,
     SliderTrack,
     Stack,
-    Switch,
     Text,
     Textarea,
 } from '@chakra-ui/react';
@@ -169,10 +168,6 @@ export const ChakraUiControls: FormUiControls = {
 
     TextareaInput: ({ field, placeholder }) => {
         return <AutoResizeTextarea focusBorderColor="primary.400" placeholder={placeholder} {...field} />;
-    },
-
-    SwitchInput: ({ field }) => {
-        return <Switch size="lg" colorScheme="primary" {...field} />;
     },
 
     Progress: ({ value, max }) => <Progress size="sm" colorScheme="primary" value={value} min={0} max={max} />,

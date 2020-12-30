@@ -1,40 +1,43 @@
 {
-  "npmScope": "team-apollo-forms",
-  "affected": {
-    "defaultBase": "master"
-  },
-  "implicitDependencies": {
-    "workspace.json": "*",
-    "package.json": {
-      "dependencies": "*",
-      "devDependencies": "*"
+    "npmScope": "team-apollo-forms",
+    "affected": {
+        "defaultBase": "master"
     },
-    "tsconfig.base.json": "*",
-    "tslint.json": "*",
-    ".eslintrc.json": "*",
-    "nx.json": "*"
-  },
-  "tasksRunnerOptions": {
-    "default": {
-      "runner": "@nrwl/workspace/tasks-runners/default",
-      "options": {
-        "cacheableOperations": ["build", "lint", "test", "e2e"]
-      }
+    "implicitDependencies": {
+        "workspace.json": "*",
+        "package.json": {
+            "dependencies": "*",
+            "devDependencies": "*"
+        },
+        "tsconfig.base.json": "*",
+        "tslint.json": "*",
+        ".eslintrc.json": "*",
+        "nx.json": "*"
+    },
+    "tasksRunnerOptions": {
+        "default": {
+            "runner": "@nrwl/workspace/tasks-runners/default",
+            "options": {
+                "cacheableOperations": ["build", "lint", "test", "e2e"]
+            }
+        }
+    },
+    "projects": {
+        "builder": {
+            "tags": []
+        },
+        "builder-e2e": {
+            "tags": [],
+            "implicitDependencies": ["builder"]
+        },
+        "core": {
+            "tags": []
+        },
+        "chakra-ui": {
+            "tags": []
+        },
+        "material-ui": {
+            "tags": []
+        }
     }
-  },
-  "projects": {
-    "builder": {
-      "tags": []
-    },
-    "builder-e2e": {
-      "tags": [],
-      "implicitDependencies": ["builder"]
-    },
-    "core": {
-      "tags": []
-    },
-    "chakra-ui": {
-      "tags": []
-    }
-  }
 }

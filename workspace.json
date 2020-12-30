@@ -8,7 +8,9 @@
       "targets": {
         "build": {
           "executor": "@nrwl/web:build",
-          "outputs": ["{options.outputPath}"],
+          "outputs": [
+            "{options.outputPath}"
+          ],
           "options": {
             "outputPath": "dist/apps/builder",
             "index": "apps/builder/src/index.html",
@@ -62,12 +64,16 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["apps/builder/**/*.{ts,tsx,js,jsx}"]
+            "lintFilePatterns": [
+              "apps/builder/**/*.{ts,tsx,js,jsx}"
+            ]
           }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": ["coverage/apps/builder"],
+          "outputs": [
+            "coverage/apps/builder"
+          ],
           "options": {
             "jestConfig": "apps/builder/jest.config.js",
             "passWithNoTests": true
@@ -96,7 +102,9 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["apps/builder-e2e/**/*.{js,ts}"]
+            "lintFilePatterns": [
+              "apps/builder-e2e/**/*.{js,ts}"
+            ]
           }
         }
       }
@@ -109,12 +117,16 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["libs/core/**/*.{ts,tsx,js,jsx}"]
+            "lintFilePatterns": [
+              "libs/core/**/*.{ts,tsx,js,jsx}"
+            ]
           }
         },
         "build": {
           "executor": "@nrwl/web:package",
-          "outputs": ["{options.outputPath}"],
+          "outputs": [
+            "{options.outputPath}"
+          ],
           "options": {
             "outputPath": "dist/libs/core",
             "tsConfig": "libs/core/tsconfig.lib.json",
@@ -139,7 +151,9 @@
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/core"],
+          "outputs": [
+            "coverage/libs/core"
+          ],
           "options": {
             "jestConfig": "libs/core/jest.config.js",
             "passWithNoTests": true
@@ -155,12 +169,16 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["libs/chakra-ui/**/*.{ts,tsx,js,jsx}"]
+            "lintFilePatterns": [
+              "libs/chakra-ui/**/*.{ts,tsx,js,jsx}"
+            ]
           }
         },
         "build": {
           "executor": "@nrwl/web:package",
-          "outputs": ["{options.outputPath}"],
+          "outputs": [
+            "{options.outputPath}"
+          ],
           "options": {
             "outputPath": "dist/libs/chakra-ui",
             "tsConfig": "libs/chakra-ui/tsconfig.lib.json",
@@ -185,9 +203,63 @@
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/chakra-ui"],
+          "outputs": [
+            "coverage/libs/chakra-ui"
+          ],
           "options": {
             "jestConfig": "libs/chakra-ui/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "material-ui": {
+      "root": "libs/material-ui",
+      "sourceRoot": "libs/material-ui/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/material-ui/**/*.{ts,tsx,js,jsx}"
+            ]
+          }
+        },
+        "build": {
+          "executor": "@nrwl/web:package",
+          "outputs": [
+            "{options.outputPath}"
+          ],
+          "options": {
+            "outputPath": "dist/libs/material-ui",
+            "tsConfig": "libs/material-ui/tsconfig.lib.json",
+            "project": "libs/material-ui/package.json",
+            "entryFile": "libs/material-ui/src/index.ts",
+            "external": [
+              "react",
+              "react-dom",
+              "@emotion/styled",
+              "@emotion/react"
+            ],
+            "babelConfig": "@nrwl/react/plugins/bundle-babel",
+            "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
+            "assets": [
+              {
+                "glob": "README.md",
+                "input": ".",
+                "output": "."
+              }
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/material-ui"
+          ],
+          "options": {
+            "jestConfig": "libs/material-ui/jest.config.js",
             "passWithNoTests": true
           }
         }

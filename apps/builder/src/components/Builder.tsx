@@ -11,11 +11,11 @@ import FieldList from './FieldList';
 import FileUploader from './FileUploader';
 import FormPreview from './FormPreview';
 
-const findFieldInForm = (formDef: FormDefinition, field: FormField | PlaceholderBlock): { sectionIdx: number; fieldIdx: number } => {
+const findFieldInForm = (formDef: FormDefinition, fieldId: string): { sectionIdx: number; fieldIdx: number } => {
     for (let sectionIdx = 0; sectionIdx < formDef.sections.length; sectionIdx++) {
         for (let fieldIdx = 0; fieldIdx < formDef.sections[sectionIdx].fields.length; fieldIdx++) {
             const f = formDef.sections[sectionIdx].fields[fieldIdx];
-            if (f.id === field.id) {
+            if (f.id === fieldId) {
                 return { sectionIdx, fieldIdx };
             }
         }
@@ -85,8 +85,8 @@ export const Builder: FC = () => {
         );
     };
 
-    const updateField = (field: FormField | PlaceholderBlock) => {
-        const { sectionIdx, fieldIdx } = findFieldInForm(formDef, field);
+    const updateField = (field: FormField | PlaceholderBlock, fieldId?: string) => {
+        const { sectionIdx, fieldIdx } = findFieldInForm(formDef, fieldId || field.id);
         setFormDef((formDef) => {
             setSelectedField({ field, sectionIdx, fieldIdx });
             return produce(formDef, (newFormDef) => {
@@ -184,8 +184,9 @@ export const Builder: FC = () => {
                     {selectedField && (
                         <Box flex="1.5" overflow="scroll" wordBreak="break-all">
                             <FieldEditor
+                                formDef={formDef}
                                 field={selectedField.field}
-                                setField={(updatedField) => updateField(updatedField)}
+                                setField={(updatedField, fieldId) => updateField(updatedField, fieldId)}
                                 deleteField={(fieldId) => deleteField(fieldId)}
                             />
                         </Box>

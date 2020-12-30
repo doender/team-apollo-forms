@@ -2,6 +2,8 @@ import {
     Box,
     Button,
     FormControl,
+    FormErrorMessage,
+    FormHelperText,
     FormLabel,
     HStack,
     NumberDecrementStepper,
@@ -12,7 +14,7 @@ import {
     Switch,
     Text,
 } from '@chakra-ui/react';
-import { FormField, PlaceholderBlock } from '@team-apollo-forms/core';
+import { FormDefinition, FormField, PlaceholderBlock } from '@team-apollo-forms/core';
 import * as React from 'react';
 import { FC, useEffect, useState } from 'react';
 import { mapFormFieldToQuestionType, questionMenuOptions } from '../../types';
@@ -21,25 +23,41 @@ import { QuestionTypeLabel } from '../QuestionTypeLabel';
 import { FormModel, mapFieldToFormValues, mapFormValuesToField } from './formModel';
 
 export interface FieldEditorProps {
+    formDef: FormDefinition;
     field: FormField | PlaceholderBlock;
-    setField: (field: FormField | PlaceholderBlock) => void;
+    setField: (field: FormField | PlaceholderBlock, fieldId?: string) => void;
     deleteField: (fieldId: string) => void;
 }
 
-const FieldEditor: FC<FieldEditorProps> = ({ field, setField, deleteField }) => {
+const isUniqueFieldId = (formDef: FormDefinition, fieldId: string) => {
+    const fieldIds = formDef.sections.map((s) => s.fields.map((field) => field.id)).flat();
+    console.log(fieldIds, fieldId);
+    return !fieldIds.includes(fieldId);
+};
+
+const isValidFieldId = (fieldId: string) => {
+    const re = /^[A-Za-z]+[\w\-\:]*$/;
+    return re.test(fieldId);
+};
+
+const FieldEditor: FC<FieldEditorProps> = ({ field, setField, deleteField, formDef }) => {
     const type = mapFormFieldToQuestionType(field);
     const questionType = questionMenuOptions.find((q) => q.value === type)?.name;
 
     const [formValues, setFormValues] = useState<FormModel>({
+        id: '',
         isRequired: false,
         description: undefined,
         label: '',
     });
 
+    const [fieldIdError, setFieldIdError] = useState<string | undefined>();
+
     useEffect(() => {
         if (field.type === 'placeholder') return;
         const newFormValues = mapFieldToFormValues(field);
         setFormValues(newFormValues);
+        setFieldIdError(undefined);
     }, [field]);
 
     const updateFormValue = <T extends keyof FormModel>(prop: T, value: FormModel[T]) => {
@@ -49,7 +67,7 @@ const FieldEditor: FC<FieldEditorProps> = ({ field, setField, deleteField }) => 
             [prop]: value,
         };
         const newField = mapFormValuesToField(field, values);
-        setField(newField);
+        setField(newField, field.id);
     };
 
     return (
@@ -254,6 +272,30 @@ const FieldEditor: FC<FieldEditorProps> = ({ field, setField, deleteField }) => 
                             </Box>
                         </>
                     )}
+
+                    <FormControl my={4} pb={4} borderBottomWidth={1} isInvalid={!!fieldIdError}>
+                        <FormLabel>ID</FormLabel>
+                        <DebouncedTextArea
+                            bg="white"
+                            value={formValues.id}
+                            onChange={(e) => {
+                                const fieldId = e.target.value;
+                                if (!isValidFieldId(fieldId)) {
+                                    setFieldIdError('Invalid ID');
+                                    return;
+                                }
+                                if (!isUniqueFieldId(formDef, fieldId)) {
+                                    setFieldIdError('ID is not unique within this form, please choose another');
+                                    return;
+                                }
+
+                                setFieldIdError(undefined);
+                                updateFormValue('id', fieldId);
+                            }}
+                        />
+                        {!fieldIdError && <FormHelperText>This ID uniquely identifies this field</FormHelperText>}
+                        <FormErrorMessage>{fieldIdError}</FormErrorMessage>
+                    </FormControl>
                 </>
             )}
 
