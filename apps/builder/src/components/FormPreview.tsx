@@ -43,7 +43,7 @@ const FormPreview: FC<FormPreviewProps> = ({ formDef, selectedField, setSelected
     const formLocale = localeMap[locale];
     return (
         <Box mt={6}>
-            <Container mt={4} maxW={768} p={0}>
+            <Container mt={4} maxW={768} p={0} fontFamily={UI === 'material' ? 'Roboto' : null}>
                 <HStack justifyContent="space-between" m={2} mb={4}>
                     <Text color="gray.500" letterSpacing={1} fontWeight={700} textTransform="uppercase">
                         preview

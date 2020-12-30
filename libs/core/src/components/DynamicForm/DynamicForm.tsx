@@ -97,7 +97,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                         }}
                     >
                         <div>
-                            {onSectionScreen(sectionIndex, formDefinition) && (
+                            {sectionIndex > 0 && (
                                 <UiControls.PrevButton onClick={() => goToPrevSection()}>
                                     {locale[FormLocaleKey.PREVIOUS]}
                                 </UiControls.PrevButton>
