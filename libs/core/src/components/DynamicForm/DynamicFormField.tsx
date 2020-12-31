@@ -36,6 +36,7 @@ const DynamicFormField: React.FC<{ item: FormField; UiControls: FormUiControls; 
                             label={item.label && renderTemplate(item.label, form.values)}
                             description={item.description && renderTemplate(item.description, form.values)}
                             errorMsg={renderErrorMsg(meta.error, locale)}
+                            onFocus={onFocus}
                             item={item}
                             field={field}
                             form={form}

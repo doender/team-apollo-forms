@@ -12,6 +12,7 @@ import {
     MenuOptionGroup,
     Text,
 } from '@chakra-ui/react';
+import { AntdControls } from '@team-apollo-forms/antd';
 import { ChakraUiControls } from '@team-apollo-forms/chakra-ui';
 import { DynamicForm, FormDefinition, FormField, PlaceholderBlock } from '@team-apollo-forms/core';
 import { MaterialUiControls } from '@team-apollo-forms/material-ui';
@@ -28,7 +29,7 @@ interface FormPreviewProps {
 const uiControlsMap = {
     chakra: ChakraUiControls,
     material: MaterialUiControls,
-    ant: ChakraUiControls,
+    ant: AntdControls,
 };
 
 const localeMap = {
@@ -60,9 +61,9 @@ const FormPreview: FC<FormPreviewProps> = ({ formDef, selectedField, setSelected
                                 <MenuItemOption value="material" onClick={() => setUI('material')}>
                                     Material UI
                                 </MenuItemOption>
-                                {/* <MenuItemOption value="ant" onClick={() => setUI('ant')}>
+                                <MenuItemOption value="ant" onClick={() => setUI('ant')}>
                                     Ant Design
-                                </MenuItemOption> */}
+                                </MenuItemOption>
                             </MenuOptionGroup>
                             <MenuDivider />
                             <MenuOptionGroup defaultValue={locale} title="Locale" type="radio">

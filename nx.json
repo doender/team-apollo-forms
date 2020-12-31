@@ -38,6 +38,9 @@
         },
         "material-ui": {
             "tags": []
+        },
+        "antd": {
+            "tags": []
         }
     }
 }

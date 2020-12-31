@@ -17,7 +17,8 @@
         "paths": {
             "@team-apollo-forms/core": ["libs/core/src/index.ts"],
             "@team-apollo-forms/chakra-ui": ["libs/chakra-ui/src/index.ts"],
-            "@team-apollo-forms/material-ui": ["libs/material-ui/src/index.ts"]
+            "@team-apollo-forms/material-ui": ["libs/material-ui/src/index.ts"],
+            "@team-apollo-forms/antd": ["libs/antd/src/index.ts"]
         }
     },
     "exclude": ["node_modules", "tmp"]

@@ -1,4 +1,5 @@
 import { ChakraProvider, extendTheme } from '@chakra-ui/react';
+import 'antd/dist/antd.css';
 import 'focus-visible/dist/focus-visible';
 import * as React from 'react';
 import ReactDOM from 'react-dom';

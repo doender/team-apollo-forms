@@ -145,10 +145,11 @@ interface BaseFormUiControlProps {
     isRequired: boolean;
     field: FieldInputProps<any>;
     form: FormikProps<any>;
+    onFocus: () => void;
 }
 
 export interface FormUiControls {
-    FormField: React.FC<BaseFormUiControlProps & { onFocus: () => void }>;
+    FormField: React.FC<BaseFormUiControlProps>;
     TextInput: React.FC<BaseFormUiControlProps>;
     NumberInput: React.FC<BaseFormUiControlProps & { min: number; max: number }>;
     LikertInput: React.FC<BaseFormUiControlProps & { anchorLabels: [string, string] }>;

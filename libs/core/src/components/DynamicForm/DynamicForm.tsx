@@ -61,7 +61,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
             validationSchema={validationSchema}
             validateOnMount={true}
             enableReinitialize={true}
-            isInitialValid={false}
+            isInitialValid={true}
             onSubmit={async (values, actions) => {
                 await onSubmit(values);
                 actions.setSubmitting(false);

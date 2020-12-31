@@ -27,11 +27,11 @@ export const MaterialUiControls: FormUiControls = {
         );
     },
 
-    TextInput: ({ field, placeholder, isRequired, isInvalid }) => {
-        return <OutlinedInput {...field} placeholder={placeholder} required={isRequired} error={isInvalid} fullWidth />;
+    TextInput: ({ field, placeholder, isRequired, isInvalid, onFocus }) => {
+        return <OutlinedInput {...field} placeholder={placeholder} required={isRequired} error={isInvalid} fullWidth onFocus={onFocus} />;
     },
 
-    NumberInput: ({ field, placeholder, min, max, isRequired, isInvalid }) => {
+    NumberInput: ({ field, placeholder, min, max, isRequired, isInvalid, onFocus }) => {
         return (
             <OutlinedInput
                 {...field}
@@ -44,13 +44,14 @@ export const MaterialUiControls: FormUiControls = {
                 required={isRequired}
                 error={isInvalid}
                 fullWidth
+                onFocus={onFocus}
             />
         );
     },
 
-    LikertInput: ({ field, anchorLabels }) => {
+    LikertInput: ({ field, anchorLabels, onFocus }) => {
         return (
-            <RadioGroup row {...field} style={{ justifyContent: 'space-between' }}>
+            <RadioGroup row {...field} style={{ justifyContent: 'space-between' }} onFocus={onFocus}>
                 {[0, 1, 2, 3, 4].map((val) => (
                     <FormControlLabel
                         key={val}
@@ -64,9 +65,9 @@ export const MaterialUiControls: FormUiControls = {
         );
     },
 
-    RadioTextInput: ({ field, options }) => {
+    RadioTextInput: ({ field, options, onFocus }) => {
         return (
-            <RadioGroup {...field}>
+            <RadioGroup {...field} onFocus={onFocus}>
                 {options.map((opt) => (
                     <FormControlLabel key={opt.value} value={opt.value} control={<Radio />} label={opt.label} />
                 ))}
@@ -74,9 +75,9 @@ export const MaterialUiControls: FormUiControls = {
         );
     },
 
-    CheckboxTextInput: ({ field, form, options }) => {
+    CheckboxTextInput: ({ field, form, options, onFocus }) => {
         return (
-            <FormGroup {...field}>
+            <FormGroup {...field} onFocus={onFocus}>
                 {options.map((opt) => (
                     <FormControlLabel
                         key={opt.value}
@@ -102,9 +103,10 @@ export const MaterialUiControls: FormUiControls = {
         );
     },
 
-    SliderInput: ({ field, form, min, max }) => {
+    SliderInput: ({ field, form, min, max, onFocus }) => {
         return (
             <Slider
+                onFocus={onFocus}
                 style={{ marginTop: '40px' }}
                 marks={[
                     { value: min, label: min },
@@ -120,8 +122,18 @@ export const MaterialUiControls: FormUiControls = {
         );
     },
 
-    TextareaInput: ({ field, placeholder, isRequired, isInvalid }) => {
-        return <OutlinedInput {...field} placeholder={placeholder} required={isRequired} error={isInvalid} fullWidth multiline />;
+    TextareaInput: ({ field, placeholder, isRequired, isInvalid, onFocus }) => {
+        return (
+            <OutlinedInput
+                {...field}
+                placeholder={placeholder}
+                required={isRequired}
+                error={isInvalid}
+                fullWidth
+                multiline
+                onFocus={onFocus}
+            />
+        );
     },
 
     Progress: ({ value, max }) => <LinearProgress variant="determinate" value={100 * (value / max)} />,

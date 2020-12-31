@@ -13,6 +13,7 @@ interface DynamicFormInputProps {
     description?: string;
     errorMsg: string;
     isRequired: boolean;
+    onFocus: () => void;
 }
 
 // Todo: make controls optional and throw error if not available
@@ -28,6 +29,7 @@ export const DynamicFormInput: React.FC<DynamicFormInputProps> = ({
     errorMsg,
     isRequired,
     isInvalid,
+    onFocus,
 }) => {
     if (item.control === 'textInput') {
         return (
@@ -39,6 +41,7 @@ export const DynamicFormInput: React.FC<DynamicFormInputProps> = ({
                 label={label}
                 id={id}
                 field={field}
+                onFocus={onFocus}
                 form={form}
                 placeholder={item.placeholder}
             />
@@ -55,6 +58,7 @@ export const DynamicFormInput: React.FC<DynamicFormInputProps> = ({
                 errorMsg={errorMsg}
                 description={description}
                 label={label}
+                onFocus={onFocus}
                 id={id}
                 field={field}
                 form={form}
@@ -72,6 +76,7 @@ export const DynamicFormInput: React.FC<DynamicFormInputProps> = ({
                 isInvalid={isInvalid}
                 errorMsg={errorMsg}
                 description={description}
+                onFocus={onFocus}
                 label={label}
                 id={id}
                 field={field}
@@ -89,6 +94,7 @@ export const DynamicFormInput: React.FC<DynamicFormInputProps> = ({
                 isInvalid={isInvalid}
                 errorMsg={errorMsg}
                 description={description}
+                onFocus={onFocus}
                 label={label}
                 id={id}
                 field={field}
@@ -106,6 +112,7 @@ export const DynamicFormInput: React.FC<DynamicFormInputProps> = ({
                 form={form}
                 options={item.options}
                 isRequired={isRequired}
+                onFocus={onFocus}
                 isInvalid={isInvalid}
                 errorMsg={errorMsg}
                 description={description}
@@ -123,6 +130,7 @@ export const DynamicFormInput: React.FC<DynamicFormInputProps> = ({
                 isInvalid={isInvalid}
                 errorMsg={errorMsg}
                 description={description}
+                onFocus={onFocus}
                 label={label}
                 id={id}
                 field={field}
@@ -142,6 +150,7 @@ export const DynamicFormInput: React.FC<DynamicFormInputProps> = ({
                 isInvalid={isInvalid}
                 errorMsg={errorMsg}
                 description={description}
+                onFocus={onFocus}
                 label={label}
                 id={id}
                 field={field}
