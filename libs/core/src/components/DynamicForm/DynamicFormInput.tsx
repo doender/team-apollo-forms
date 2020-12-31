@@ -14,6 +14,7 @@ interface DynamicFormInputProps {
     errorMsg: string;
     isRequired: boolean;
     onFocus: () => void;
+    placeholder: string;
 }
 
 // Todo: make controls optional and throw error if not available
@@ -30,6 +31,7 @@ export const DynamicFormInput: React.FC<DynamicFormInputProps> = ({
     isRequired,
     isInvalid,
     onFocus,
+    placeholder,
 }) => {
     if (item.control === 'textInput') {
         return (
@@ -43,7 +45,7 @@ export const DynamicFormInput: React.FC<DynamicFormInputProps> = ({
                 field={field}
                 onFocus={onFocus}
                 form={form}
-                placeholder={item.placeholder}
+                placeholder={placeholder}
             />
         );
     }
@@ -62,7 +64,7 @@ export const DynamicFormInput: React.FC<DynamicFormInputProps> = ({
                 id={id}
                 field={field}
                 form={form}
-                placeholder={item.placeholder}
+                placeholder={placeholder}
                 min={min || -Infinity}
                 max={max || Infinity}
             />
@@ -81,7 +83,7 @@ export const DynamicFormInput: React.FC<DynamicFormInputProps> = ({
                 id={id}
                 field={field}
                 form={form}
-                placeholder={item.placeholder}
+                placeholder={placeholder}
             />
         );
     }
@@ -99,7 +101,7 @@ export const DynamicFormInput: React.FC<DynamicFormInputProps> = ({
                 id={id}
                 field={field}
                 form={form}
-                placeholder={item.placeholder}
+                placeholder={placeholder}
                 anchorLabels={anchorLabels}
             />
         );
@@ -118,7 +120,7 @@ export const DynamicFormInput: React.FC<DynamicFormInputProps> = ({
                 description={description}
                 label={label}
                 id={id}
-                placeholder={item.placeholder}
+                placeholder={placeholder}
             />
         );
     }
@@ -135,7 +137,7 @@ export const DynamicFormInput: React.FC<DynamicFormInputProps> = ({
                 id={id}
                 field={field}
                 form={form}
-                placeholder={item.placeholder}
+                placeholder={placeholder}
                 options={item.options}
             />
         );
@@ -155,7 +157,7 @@ export const DynamicFormInput: React.FC<DynamicFormInputProps> = ({
                 id={id}
                 field={field}
                 form={form}
-                placeholder={item.placeholder}
+                placeholder={placeholder}
                 min={min || 0}
                 max={max || 1000}
             />

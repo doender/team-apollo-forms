@@ -10,6 +10,7 @@ export enum FormLocaleKey {
     NEXT = 'next',
     PREVIOUS = 'previous',
     SUBMIT = 'submit',
+    PLACEHOLDER = 'placeholder',
 }
 
 export interface FormLocale {
@@ -22,6 +23,7 @@ export interface FormLocale {
     [FormLocaleKey.NEXT]: string;
     [FormLocaleKey.PREVIOUS]: string;
     [FormLocaleKey.SUBMIT]: string;
+    [FormLocaleKey.PLACEHOLDER]: string;
 }
 
 setLocale({
@@ -60,6 +62,7 @@ const en: FormLocale = {
     next: 'Next',
     previous: 'Previous',
     submit: 'Submit',
+    placeholder: 'Type your answer here',
 };
 
 const nl: FormLocale = {
@@ -72,6 +75,7 @@ const nl: FormLocale = {
     next: 'Volgende',
     previous: 'Vorige',
     submit: 'Verzenden',
+    placeholder: 'Typ je antwoord hier',
 };
 
 export { en, nl, renderErrorMsg };

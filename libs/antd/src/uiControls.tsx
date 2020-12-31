@@ -25,7 +25,7 @@ export const AntdControls: FormUiControls = {
     },
 
     TextInput: ({ field, placeholder, isRequired, onFocus }) => {
-        return <Input onFocus={onFocus} {...field} placeholder={placeholder} required={isRequired} />;
+        return <Input size="large" onFocus={onFocus} {...field} placeholder={placeholder} required={isRequired} />;
     },
 
     NumberInput: ({ form, field, placeholder, min, max, isRequired, onFocus }) => {
@@ -37,6 +37,8 @@ export const AntdControls: FormUiControls = {
                 onFocus={onFocus}
                 placeholder={placeholder}
                 required={isRequired}
+                size="large"
+                style={{ width: '100%' }}
                 onChange={(val) => form.setFieldValue(field.name, val)}
             />
         );
@@ -61,7 +63,7 @@ export const AntdControls: FormUiControls = {
 
     RadioTextInput: ({ field, options }) => {
         return (
-            <Radio.Group {...field}>
+            <Radio.Group {...field} size="large">
                 {options.map((opt) => (
                     <Row key={opt.value} style={{ marginBottom: '12px' }}>
                         <Radio value={opt.value}>{opt.label}</Radio>
@@ -97,11 +99,17 @@ export const AntdControls: FormUiControls = {
     },
 
     TextareaInput: ({ field, placeholder, isRequired, onFocus }) => {
-        return <Input.TextArea onFocus={onFocus} {...field} placeholder={placeholder} required={isRequired} />;
+        return <Input.TextArea size="large" onFocus={onFocus} {...field} placeholder={placeholder} required={isRequired} />;
     },
 
     Progress: ({ value, max }) => (
-        <Progress style={{ padding: '10px' }} percent={100 * (value / max)} strokeLinecap="square" showInfo={false} status="active" />
+        <Progress
+            style={{ paddingLeft: '10px', paddingRight: '10px' }}
+            percent={100 * (value / max)}
+            strokeLinecap="square"
+            showInfo={false}
+            status="active"
+        />
     ),
 
     PrevButton: ({ onClick, children }) => {

@@ -38,7 +38,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
     useEffect(() => {
         if (formDefinition && selectedField) {
             const sectionIdxFromSelected = getSectionIdxFromField(formDefinition, selectedField);
-            setSectionIndex(sectionIdxFromSelected == null ? -1 : sectionIdxFromSelected);
+            setSectionIndex(sectionIdxFromSelected == null ? 0 : sectionIdxFromSelected);
         }
     }, [formDefinition, selectedField]);
 
@@ -70,7 +70,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
         >
             {(props) => (
                 <FormikForm>
-                    {formDefinition.sections.length > 1 && (
+                    {onSectionScreen(sectionIndex, formDefinition) && (
                         <UiControls.Progress value={sectionIndex + 1} max={formDefinition.sections.length} />
                     )}
                     <div style={{ paddingTop: '2rem', paddingBottom: '2rem' }}>
@@ -97,26 +97,26 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                         }}
                     >
                         <div>
-                            {sectionIndex > 0 && (
+                            {sectionIndex > 0 && onSectionScreen(sectionIndex, formDefinition) && (
                                 <UiControls.PrevButton onClick={() => goToPrevSection()}>
                                     {locale[FormLocaleKey.PREVIOUS]}
                                 </UiControls.PrevButton>
                             )}
                         </div>
                         <div>
-                            {shouldShowProceedButton(sectionIndex, formDefinition) && (
-                                <UiControls.NextButton
-                                    onClick={() => goToNextSection()}
-                                    isDisabled={!canContinueToNextSection(formDefinition.sections[sectionIndex], props)}
-                                >
-                                    {locale[FormLocaleKey.NEXT]}
-                                </UiControls.NextButton>
-                            )}
-                            {onLastSectionScreen(sectionIndex, formDefinition) && (
-                                <UiControls.SubmitButton isDisabled={!props.isValid} isLoading={props.isSubmitting}>
-                                    {locale[FormLocaleKey.SUBMIT]}
-                                </UiControls.SubmitButton>
-                            )}
+                            {onSectionScreen(sectionIndex, formDefinition) &&
+                                (onLastSectionScreen(sectionIndex, formDefinition) ? (
+                                    <UiControls.SubmitButton isDisabled={!props.isValid} isLoading={props.isSubmitting}>
+                                        {locale[FormLocaleKey.SUBMIT]}
+                                    </UiControls.SubmitButton>
+                                ) : (
+                                    <UiControls.NextButton
+                                        onClick={() => goToNextSection()}
+                                        isDisabled={!canContinueToNextSection(formDefinition.sections[sectionIndex], props)}
+                                    >
+                                        {locale[FormLocaleKey.NEXT]}
+                                    </UiControls.NextButton>
+                                ))}
                         </div>
                     </div>
                 </FormikForm>
@@ -170,15 +170,11 @@ const onOutroScreen = (sectionIndex: number, formDef: FormDefinition) => {
 };
 
 const onSectionScreen = (sectionIndex: number, formDef: FormDefinition) => {
-    return sectionIndex > -1 && sectionIndex < formDef.sections.length;
+    return sectionIndex < formDef.sections.length;
 };
 
 const onLastSectionScreen = (sectionIndex: number, formDef: FormDefinition) => {
     return sectionIndex === formDef.sections.length - 1;
-};
-
-const shouldShowProceedButton = (sectionIndex: number, formDef: FormDefinition) => {
-    return sectionIndex < formDef.sections.length - 1;
 };
 
 export default DynamicForm;
