@@ -136,9 +136,9 @@ export const ChakraUiControls: FormUiControls = {
         );
     },
 
-    CheckboxTextInput: ({ value, onChange, options, onBlur, name }) => {
+    CheckboxTextInput: ({ value, onChange, options }) => {
         return (
-            <CheckboxGroup colorScheme="primary" value={value} onChange={onChange} onBlur={onBlur} name={name}>
+            <CheckboxGroup colorScheme="primary" value={value} onChange={onChange}>
                 <Stack>
                     {options.map((opt) => (
                         <Checkbox cursor="pointer" key={opt.value} value={opt.value}>

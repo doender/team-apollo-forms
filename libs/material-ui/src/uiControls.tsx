@@ -180,7 +180,7 @@ export const MaterialUiControls: FormUiControls = {
 
     SubmitButton: ({ isDisabled, isLoading, children }) => {
         return (
-            <Button variant="contained" disabled={isDisabled || isLoading} type="submit">
+            <Button variant="contained" color="primary" disabled={isDisabled || isLoading} type="submit">
                 {children}
             </Button>
         );
