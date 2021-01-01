@@ -1,4 +1,4 @@
-import { FieldInputProps, FormikProps } from 'formik';
+import { FormikProps } from 'formik';
 import { ReactNode } from 'react';
 
 export interface FormFieldValidation<T extends number | string | boolean | Array<number | string>> {
@@ -54,7 +54,7 @@ export interface NumberInputFormField extends BaseFormField {
 }
 
 export interface LikertInputFormField extends BaseFormField {
-    control: 'likert5';
+    control: 'likert';
     validationType: 'number';
     anchorLabels?: [string, string];
     value?: number;
@@ -135,29 +135,41 @@ export type PlaceholderFnsFromDef<T extends DeepReadonly<FormDefinition>> = {
     ) => ReactNode;
 };
 
-interface BaseFormUiControlProps {
+interface BaseFormUiControlProps<T> {
     isInvalid: boolean;
     label?: string;
-    id: string;
     description?: string;
     errorMsg: string;
     placeholder: string | undefined;
     isRequired: boolean;
-    field: FieldInputProps<any>;
-    form: FormikProps<any>;
     onFocus: () => void;
+    onBlur: (e: any) => void;
+    value: T;
+    onChange: (val: T) => void;
+    name: string;
+}
+
+interface FormFieldProps {
+    isInvalid: boolean;
+    label?: string;
+    description?: string;
+    errorMsg: string;
+    placeholder: string | undefined;
+    isRequired: boolean;
+    onFocus: () => void;
+    onBlur: (e: any) => void;
+    id: string;
 }
 
 export interface FormUiControls {
-    FormField: React.FC<BaseFormUiControlProps>;
-    TextInput: React.FC<BaseFormUiControlProps>;
-    NumberInput: React.FC<BaseFormUiControlProps & { min: number; max: number }>;
-    LikertInput: React.FC<BaseFormUiControlProps & { anchorLabels: [string, string] }>;
-    RadioTextInput: React.FC<BaseFormUiControlProps & { options: Option[] }>;
-    CheckboxTextInput: React.FC<BaseFormUiControlProps & { options: Option[] }>;
-    SliderInput: React.FC<BaseFormUiControlProps & { min: number; max: number }>;
-    TextareaInput: React.FC<BaseFormUiControlProps>;
-
+    FormField: React.FC<FormFieldProps>;
+    TextInput?: React.FC<BaseFormUiControlProps<any>>;
+    NumberInput?: React.FC<BaseFormUiControlProps<any> & { min: number; max: number }>;
+    LikertInput?: React.FC<BaseFormUiControlProps<any> & { anchorLabels: [string, string] }>;
+    RadioTextInput?: React.FC<BaseFormUiControlProps<any> & { options: Option[] }>;
+    CheckboxTextInput?: React.FC<BaseFormUiControlProps<any> & { options: Option[] }>;
+    SliderInput?: React.FC<BaseFormUiControlProps<any> & { min: number; max: number }>;
+    TextareaInput?: React.FC<BaseFormUiControlProps<any>>;
     Progress: React.FC<{ value: number; max: number }>;
     PrevButton: React.FC<{ onClick: () => void }>;
     NextButton: React.FC<{ onClick: () => void; isDisabled: boolean }>;

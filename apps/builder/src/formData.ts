@@ -185,7 +185,7 @@ export const formData: FormDefinition = {
                     id: 'workplaceConcentration',
                     type: 'formField',
                     label: 'Ik kan me op mijn werkplek goed concentreren',
-                    control: 'likert5',
+                    control: 'likert',
                     anchorLabels: ['Helemaal oneens', 'Helemaal eens'],
                     validationType: 'number',
                     validations: [
@@ -199,7 +199,7 @@ export const formData: FormDefinition = {
                     id: 'workplaceSatisfation',
                     type: 'formField',
                     label: 'Ik ben tevreden met mijn werkplek',
-                    control: 'likert5',
+                    control: 'likert',
                     anchorLabels: ['Helemaal oneens', 'Helemaal eens'],
                     validationType: 'number',
                     validations: [

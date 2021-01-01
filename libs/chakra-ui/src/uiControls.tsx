@@ -57,17 +57,30 @@ export const ChakraUiControls: FormUiControls = {
         );
     },
 
-    TextInput: ({ field, placeholder }) => <Input focusBorderColor="primary.300" placeholder={placeholder} {...field} />,
+    TextInput: ({ placeholder, value, onChange, onBlur, name }) => {
+        return (
+            <Input
+                focusBorderColor="primary.300"
+                placeholder={placeholder}
+                value={value}
+                onChange={(e) => onChange(e.target.value)}
+                onBlur={onBlur}
+                name={name}
+            />
+        );
+    },
 
-    NumberInput: ({ field, form, placeholder, min, max }) => {
+    NumberInput: ({ value, onChange, placeholder, min, max, onBlur, name }) => {
         return (
             <NumberInput
                 focusBorderColor="primary.400"
                 placeholder={placeholder}
-                {...field}
-                onChange={(e) => form.setFieldValue(field.name, e)}
+                value={value}
+                onChange={onChange}
                 min={min || -Infinity}
                 max={max || Infinity}
+                onBlur={onBlur}
+                name={name}
             >
                 <NumberInputField />
                 <NumberInputStepper>
@@ -78,9 +91,9 @@ export const ChakraUiControls: FormUiControls = {
         );
     },
 
-    LikertInput: ({ field, form, anchorLabels }) => {
+    LikertInput: ({ value, onChange, anchorLabels, onBlur, name }) => {
         return (
-            <RadioGroup colorScheme="primary" mt={8} {...field} onChange={(e) => form.setFieldValue(field.name, e)}>
+            <RadioGroup colorScheme="primary" mt={8} value={value} onChange={onChange} onBlur={onBlur} name={name}>
                 <Stack direction="row" width="100%">
                     {[0, 1, 2, 3, 4].map((val) => (
                         <Radio
@@ -109,9 +122,9 @@ export const ChakraUiControls: FormUiControls = {
         );
     },
 
-    RadioTextInput: ({ field, form, options }) => {
+    RadioTextInput: ({ value, onChange, options, onBlur, name }) => {
         return (
-            <RadioGroup colorScheme="primary" {...field} onChange={(e) => form.setFieldValue(field.name, e)}>
+            <RadioGroup colorScheme="primary" value={value} onChange={onChange} onBlur={onBlur} name={name}>
                 <Stack>
                     {options.map((opt) => (
                         <Radio cursor="pointer" key={opt.value} value={opt.value}>
@@ -123,9 +136,9 @@ export const ChakraUiControls: FormUiControls = {
         );
     },
 
-    CheckboxTextInput: ({ field, form, options }) => {
+    CheckboxTextInput: ({ value, onChange, options, onBlur, name }) => {
         return (
-            <CheckboxGroup colorScheme="primary" {...field} onChange={(e) => form.setFieldValue(field.name, e)}>
+            <CheckboxGroup colorScheme="primary" value={value} onChange={onChange} onBlur={onBlur} name={name}>
                 <Stack>
                     {options.map((opt) => (
                         <Checkbox cursor="pointer" key={opt.value} value={opt.value}>
@@ -137,16 +150,18 @@ export const ChakraUiControls: FormUiControls = {
         );
     },
 
-    SliderInput: ({ field, form, min, max }) => {
+    SliderInput: ({ min, max, onChange, value, onBlur, name }) => {
         return (
             <Slider
                 colorScheme="primary"
                 my={6}
-                value={field.value}
-                onChange={(e) => form.setFieldValue(field.name, e)}
+                value={value}
+                onChange={onChange}
                 min={min}
                 max={max}
                 focusThumbOnChange={false}
+                onBlur={onBlur}
+                name={name}
             >
                 <SliderTrack>
                     <SliderFilledTrack />
@@ -159,15 +174,24 @@ export const ChakraUiControls: FormUiControls = {
                 </Text>
                 <SliderThumb boxSize={6}>
                     <Badge position="absolute" left={0} top={-6}>
-                        {field.value}
+                        {value}
                     </Badge>
                 </SliderThumb>
             </Slider>
         );
     },
 
-    TextareaInput: ({ field, placeholder }) => {
-        return <AutoResizeTextarea focusBorderColor="primary.400" placeholder={placeholder} {...field} />;
+    TextareaInput: ({ onChange, value, placeholder, name, onBlur }) => {
+        return (
+            <AutoResizeTextarea
+                focusBorderColor="primary.400"
+                placeholder={placeholder}
+                value={value}
+                name={name}
+                onBlur={onBlur}
+                onChange={(e) => onChange(e.target.value)}
+            />
+        );
     },
 
     Progress: ({ value, max }) => <Progress size="sm" colorScheme="primary" value={value} min={0} max={max} />,

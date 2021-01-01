@@ -29,7 +29,7 @@ export const mapFieldToFormValues = (field: FormField): FormModel => {
         model.isMultiple = field.control === 'checkboxText';
     }
 
-    if (field.control === 'likert5') {
+    if (field.control === 'likert') {
         model.anchorLabelLeft = field.anchorLabels[0];
         model.anchorLabelRight = field.anchorLabels[1];
     }

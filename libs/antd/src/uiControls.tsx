@@ -24,14 +24,24 @@ export const AntdControls: FormUiControls = {
         );
     },
 
-    TextInput: ({ field, placeholder, isRequired, onFocus }) => {
-        return <Input size="large" onFocus={onFocus} {...field} placeholder={placeholder} required={isRequired} />;
+    TextInput: ({ placeholder, isRequired, onFocus, value, onChange, onBlur, name }) => {
+        return (
+            <Input
+                size="large"
+                onFocus={onFocus}
+                placeholder={placeholder}
+                required={isRequired}
+                name={name}
+                value={value}
+                onBlur={onBlur}
+                onChange={(e) => onChange(e.target.value)}
+            />
+        );
     },
 
-    NumberInput: ({ form, field, placeholder, min, max, isRequired, onFocus }) => {
+    NumberInput: ({ placeholder, min, max, isRequired, onFocus, value, onChange, onBlur, name }) => {
         return (
             <InputNumber
-                {...field}
                 min={min}
                 max={max}
                 onFocus={onFocus}
@@ -39,19 +49,28 @@ export const AntdControls: FormUiControls = {
                 required={isRequired}
                 size="large"
                 style={{ width: '100%' }}
-                onChange={(val) => form.setFieldValue(field.name, val)}
+                name={name}
+                value={value}
+                onBlur={onBlur}
+                onChange={onChange}
             />
         );
     },
 
-    LikertInput: ({ field, anchorLabels }) => {
+    LikertInput: ({ anchorLabels, value, onChange, onBlur, name }) => {
         const radioStyle = {
             display: 'flex',
             flexDirection: 'column' as 'column',
             alignItems: 'center',
         };
         return (
-            <Radio.Group {...field} style={{ display: 'flex', justifyContent: 'space-between' }} size="large">
+            <Radio.Group
+                name={name}
+                value={value}
+                onChange={(e) => onChange(e.target.value)}
+                style={{ display: 'flex', justifyContent: 'space-between' }}
+                size="large"
+            >
                 {[0, 1, 2, 3, 4].map((val) => (
                     <Radio key={val} style={radioStyle} value={val.toFixed(0)}>
                         {val === 0 ? anchorLabels[0] : val === 4 ? anchorLabels[1] : null}
@@ -61,9 +80,9 @@ export const AntdControls: FormUiControls = {
         );
     },
 
-    RadioTextInput: ({ field, options }) => {
+    RadioTextInput: ({ options, value, onChange, onBlur, name }) => {
         return (
-            <Radio.Group {...field} size="large">
+            <Radio.Group name={name} value={value} onChange={(e) => onChange(e.target.value)} size="large">
                 {options.map((opt) => (
                     <Row key={opt.value} style={{ marginBottom: '12px' }}>
                         <Radio value={opt.value}>{opt.label}</Radio>
@@ -73,9 +92,9 @@ export const AntdControls: FormUiControls = {
         );
     },
 
-    CheckboxTextInput: ({ field, form, options }) => {
+    CheckboxTextInput: ({ options, value, onChange, onBlur, name }) => {
         return (
-            <Checkbox.Group {...field} onChange={(val) => form.setFieldValue(field.name, val)}>
+            <Checkbox.Group name={name} value={value} onChange={onChange}>
                 {options.map((opt) => (
                     <Row key={opt.value} style={{ marginBottom: '12px' }}>
                         <Checkbox value={opt.value}>{opt.label}</Checkbox>
@@ -85,21 +104,32 @@ export const AntdControls: FormUiControls = {
         );
     },
 
-    SliderInput: ({ field, form, min, max }) => {
+    SliderInput: ({ min, max, value, onChange, onBlur, name }) => {
         return (
             <Slider
                 style={{ marginTop: '40px' }}
-                {...field}
                 min={min}
                 max={max}
                 marks={{ [min]: min, [max]: max }}
-                onChange={(val) => form.setFieldValue(field.name, val)}
+                value={value}
+                onChange={onChange}
             />
         );
     },
 
-    TextareaInput: ({ field, placeholder, isRequired, onFocus }) => {
-        return <Input.TextArea size="large" onFocus={onFocus} {...field} placeholder={placeholder} required={isRequired} />;
+    TextareaInput: ({ placeholder, isRequired, onFocus, value, onChange, onBlur, name }) => {
+        return (
+            <Input.TextArea
+                size="large"
+                onFocus={onFocus}
+                placeholder={placeholder}
+                required={isRequired}
+                name={name}
+                value={value}
+                onBlur={onBlur}
+                onChange={(e) => onChange(e.target.value)}
+            />
+        );
     },
 
     Progress: ({ value, max }) => (

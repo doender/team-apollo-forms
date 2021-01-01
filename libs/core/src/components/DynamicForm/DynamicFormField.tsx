@@ -5,39 +5,42 @@ import { renderTemplate } from '../../utils/renderTemplate';
 import { DynamicFormInput } from './DynamicFormInput';
 import { FormField, FormFieldValidation, FormUiControls } from './types';
 
-const DynamicFormField: React.FC<{ item: FormField; UiControls: FormUiControls; onFocus: () => void; locale: FormLocale }> = ({
-    item,
-    UiControls,
-    onFocus,
-    locale,
-}) => {
+const DynamicFormField: React.FC<{
+    item: FormField;
+    UiControls: FormUiControls;
+    onFocus: () => void;
+    onBlur: () => void;
+    locale: FormLocale;
+}> = ({ item, UiControls, onFocus, locale, onBlur }) => {
     const validations: FormFieldValidation<any>[] = (item.type === 'formField' ? item.validations : undefined) || [];
     const isRequired = validations.find((val) => val.type === 'required') != null;
     const placeholder = item.placeholder || locale[FormLocaleKey.PLACEHOLDER];
+    const getLabel = (formValues) => item.label && renderTemplate(item.label, formValues);
+    const getDescription = (formValues) => item.description && renderTemplate(item.description, formValues);
     return (
         <>
             <Field name={item.id}>
                 {({ field, meta, form }: FieldProps) => (
                     <UiControls.FormField
                         isRequired={isRequired}
-                        onFocus={onFocus}
                         id={item.id}
+                        onFocus={onFocus}
+                        onBlur={onBlur}
                         placeholder={placeholder}
-                        field={field}
-                        form={form}
                         isInvalid={!!meta.touched && !!meta.error}
-                        label={item.label && renderTemplate(item.label, form.values)}
-                        description={item.description && renderTemplate(item.description, form.values)}
+                        label={getLabel(form.values)}
+                        description={getDescription(form.values)}
                         errorMsg={renderErrorMsg(meta.error, locale)}
                     >
                         <DynamicFormInput
                             id={item.id}
                             isRequired={isRequired}
                             isInvalid={!!meta.touched && !!meta.error}
-                            label={item.label && renderTemplate(item.label, form.values)}
-                            description={item.description && renderTemplate(item.description, form.values)}
+                            label={getLabel(form.values)}
+                            description={getDescription(form.values)}
                             errorMsg={renderErrorMsg(meta.error, locale)}
                             onFocus={onFocus}
+                            onBlur={onBlur}
                             placeholder={placeholder}
                             item={item}
                             field={field}

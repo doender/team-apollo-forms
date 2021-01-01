@@ -12,8 +12,9 @@ const DynamicFormSection: React.FC<{
     placeholders: any;
     UiControls: FormUiControls;
     onFocus: (field: FormField, fieldIdx: number) => void;
+    onBlur?: (field: FormField, fieldIdx: number) => void;
     locale: FormLocale;
-}> = ({ form, section, placeholders, UiControls, onFocus, locale }) => {
+}> = ({ form, section, placeholders, UiControls, onFocus, locale, onBlur }) => {
     return (
         <>
             {section.title && (
@@ -31,7 +32,13 @@ const DynamicFormSection: React.FC<{
 
                     return (
                         <div key={item.id} style={{ paddingLeft: '2rem', paddingRight: '2rem' }}>
-                            <DynamicFormField locale={locale} item={item} UiControls={UiControls} onFocus={() => onFocus(item, idx)} />
+                            <DynamicFormField
+                                locale={locale}
+                                item={item}
+                                UiControls={UiControls}
+                                onFocus={() => onFocus(item, idx)}
+                                onBlur={() => onBlur && onBlur(item, idx)}
+                            />
                         </div>
                     );
                 } else if (isPlaceholder(item) && placeholders && item.id in placeholders) {

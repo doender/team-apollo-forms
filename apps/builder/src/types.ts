@@ -55,7 +55,7 @@ export const mapFormFieldToQuestionType = (field: FormField | PlaceholderBlock):
     if (field.control === 'slider' || field.control === 'numberInput') {
         return QuestionType.NUMBER;
     }
-    if (field.control === 'likert5') {
+    if (field.control === 'likert') {
         return QuestionType.OPINION_SCALE;
     }
     if (field.control === 'checkboxText' || field.control === 'radioText') {
@@ -120,7 +120,7 @@ export const createQuestion = (questionType: QuestionType | BlockType): FormFiel
         return {
             type,
             id,
-            control: 'likert5',
+            control: 'likert',
             validationType: 'number',
             anchorLabels: ['Disagree', 'Agree'],
         } as LikertInputFormField;

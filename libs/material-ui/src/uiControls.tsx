@@ -27,14 +27,25 @@ export const MaterialUiControls: FormUiControls = {
         );
     },
 
-    TextInput: ({ field, placeholder, isRequired, isInvalid, onFocus }) => {
-        return <OutlinedInput {...field} placeholder={placeholder} required={isRequired} error={isInvalid} fullWidth onFocus={onFocus} />;
-    },
-
-    NumberInput: ({ field, placeholder, min, max, isRequired, isInvalid, onFocus }) => {
+    TextInput: ({ placeholder, isRequired, isInvalid, value, onFocus, name, onChange, onBlur }) => {
         return (
             <OutlinedInput
-                {...field}
+                placeholder={placeholder}
+                required={isRequired}
+                error={isInvalid}
+                fullWidth
+                value={value}
+                onFocus={onFocus}
+                name={name}
+                onChange={(e) => onChange(e.target.value)}
+                onBlur={onBlur}
+            />
+        );
+    },
+
+    NumberInput: ({ placeholder, min, max, isRequired, value, isInvalid, onFocus, name, onChange, onBlur }) => {
+        return (
+            <OutlinedInput
                 type="number"
                 inputProps={{
                     max,
@@ -43,15 +54,27 @@ export const MaterialUiControls: FormUiControls = {
                 placeholder={placeholder}
                 required={isRequired}
                 error={isInvalid}
+                value={value}
                 fullWidth
                 onFocus={onFocus}
+                name={name}
+                onChange={(e) => onChange(e.target.value)}
+                onBlur={onBlur}
             />
         );
     },
 
-    LikertInput: ({ field, anchorLabels, onFocus }) => {
+    LikertInput: ({ anchorLabels, onFocus, name, value, onChange, onBlur }) => {
         return (
-            <RadioGroup row {...field} style={{ justifyContent: 'space-between' }} onFocus={onFocus}>
+            <RadioGroup
+                row
+                style={{ justifyContent: 'space-between' }}
+                onFocus={onFocus}
+                name={name}
+                onChange={(e) => onChange(e.target.value)}
+                value={value}
+                onBlur={onBlur}
+            >
                 {[0, 1, 2, 3, 4].map((val) => (
                     <FormControlLabel
                         key={val}
@@ -65,9 +88,9 @@ export const MaterialUiControls: FormUiControls = {
         );
     },
 
-    RadioTextInput: ({ field, options, onFocus }) => {
+    RadioTextInput: ({ options, onFocus, value, name, onChange, onBlur }) => {
         return (
-            <RadioGroup {...field} onFocus={onFocus}>
+            <RadioGroup onFocus={onFocus} name={name} onChange={(e) => onChange(e.target.value)} onBlur={onBlur} value={value}>
                 {options.map((opt) => (
                     <FormControlLabel key={opt.value} value={opt.value} control={<Radio />} label={opt.label} />
                 ))}
@@ -75,22 +98,23 @@ export const MaterialUiControls: FormUiControls = {
         );
     },
 
-    CheckboxTextInput: ({ field, form, options, onFocus }) => {
+    CheckboxTextInput: ({ options, onFocus, name, onChange, onBlur, value }) => {
         return (
-            <FormGroup {...field} onFocus={onFocus}>
+            <FormGroup onFocus={onFocus} onBlur={onBlur}>
                 {options.map((opt) => (
                     <FormControlLabel
                         key={opt.value}
                         value={opt.value}
+                        name={name}
                         control={
                             <Checkbox
-                                checked={field.value.includes(opt.value)}
-                                onChange={(e, value) => {
-                                    if (value) {
-                                        form.setFieldValue(field.name, [...field.value, opt.value]);
+                                checked={value.includes(opt.value)}
+                                onChange={(e, isChecked) => {
+                                    if (isChecked) {
+                                        onChange([...value, opt.value]);
                                     } else {
-                                        const idx = field.value.findIndex((val) => val === opt.value);
-                                        form.setFieldValue(field.name, [...field.value.slice(0, idx), ...field.value.slice(idx + 1)]);
+                                        const idx = value.findIndex((val) => val === opt.value);
+                                        onChange([...value.slice(0, idx), ...value.slice(idx + 1)]);
                                     }
                                 }}
                                 name={opt.label}
@@ -103,7 +127,7 @@ export const MaterialUiControls: FormUiControls = {
         );
     },
 
-    SliderInput: ({ field, form, min, max, onFocus }) => {
+    SliderInput: ({ min, max, onFocus, value, name, onChange, onBlur }) => {
         return (
             <Slider
                 onFocus={onFocus}
@@ -113,25 +137,29 @@ export const MaterialUiControls: FormUiControls = {
                     { value: max, label: max },
                 ]}
                 valueLabelDisplay="on"
-                {...field}
                 min={min}
                 max={max}
-                value={field.value || 0}
-                onChange={(e, value) => form.setFieldValue(field.name, value)}
+                value={value || 0}
+                onChange={(e, value) => onChange(value)}
+                name={name}
+                onBlur={onBlur}
             />
         );
     },
 
-    TextareaInput: ({ field, placeholder, isRequired, isInvalid, onFocus }) => {
+    TextareaInput: ({ placeholder, isRequired, isInvalid, onFocus, name, onChange, onBlur, value }) => {
         return (
             <OutlinedInput
-                {...field}
                 placeholder={placeholder}
                 required={isRequired}
                 error={isInvalid}
                 fullWidth
                 multiline
                 onFocus={onFocus}
+                name={name}
+                onChange={(e) => onChange(e.target.value)}
+                onBlur={onBlur}
+                value={value}
             />
         );
     },
