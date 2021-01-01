@@ -70,7 +70,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
         >
             {(props) => (
                 <FormikForm>
-                    {onSectionScreen(sectionIndex, formDefinition) && (
+                    {formDefinition.sections.length > 1 && onSectionScreen(sectionIndex, formDefinition) && (
                         <UiControls.Progress value={sectionIndex + 1} max={formDefinition.sections.length} />
                     )}
                     <div style={{ paddingTop: '2rem', paddingBottom: '2rem' }}>
