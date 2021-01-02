@@ -182,7 +182,7 @@ export const Builder: FC = () => {
                         />
                     </Box>
                     {selectedField && (
-                        <Box flex="1.5" overflow="scroll" wordBreak="break-all">
+                        <Box flex="1.5" height="100%" overflow="scroll">
                             <FieldEditor
                                 formDef={formDef}
                                 field={selectedField.field}

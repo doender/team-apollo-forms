@@ -22,11 +22,12 @@ const DebouncedTextArea: FC<{ value: any; onChange: any; placeholder?: string } 
             minRows={1}
             placeholder={placeholder}
             wordBreak="break-word"
-            p={4}
+            p={2}
             as={ResizeTextarea}
             variant="unstyled"
             value={value}
             onChange={onChange}
+            size="sm"
             {...props}
         />
     );

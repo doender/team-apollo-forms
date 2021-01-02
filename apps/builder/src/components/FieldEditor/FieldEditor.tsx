@@ -19,6 +19,7 @@ import * as React from 'react';
 import { FC, useEffect, useState } from 'react';
 import { mapFormFieldToQuestionType, questionMenuOptions } from '../../types';
 import DebouncedTextArea from '../DebouncedTextArea';
+import OptionsEditor from '../OptionsEditor';
 import { QuestionTypeLabel } from '../QuestionTypeLabel';
 import { FormModel, mapFieldToFormValues, mapFormValuesToField } from './formModel';
 
@@ -84,7 +85,7 @@ const FieldEditor: FC<FieldEditorProps> = ({ field, setField, deleteField, formD
             {field.type === 'formField' && (
                 <>
                     <FormControl my={4} pb={4} borderBottomWidth={1}>
-                        <FormLabel>Label</FormLabel>
+                        <FormLabel fontSize="0.86rem">Label</FormLabel>
                         <DebouncedTextArea
                             bg="white"
                             value={formValues.label}
@@ -95,11 +96,11 @@ const FieldEditor: FC<FieldEditorProps> = ({ field, setField, deleteField, formD
 
                     <Box borderBottomWidth={1}>
                         <FormControl mt={4} pb={4} display="flex" alignItems="center" justifyContent="space-between">
-                            <FormLabel mb="0" htmlFor="required">
+                            <FormLabel fontSize="0.86rem" mb="0" htmlFor="required">
                                 Description
                             </FormLabel>
                             <Switch
-                                size="md"
+                                size="sm"
                                 colorScheme="primary"
                                 isChecked={formValues.description !== undefined}
                                 onChange={() => updateFormValue('description', formValues.description === undefined ? '' : undefined)}
@@ -117,24 +118,33 @@ const FieldEditor: FC<FieldEditorProps> = ({ field, setField, deleteField, formD
                     </Box>
 
                     <FormControl my={4} pb={4} display="flex" alignItems="center" justifyContent="space-between" borderBottomWidth={1}>
-                        <FormLabel mb="0" htmlFor="required">
+                        <FormLabel fontSize="0.86rem" mb="0" htmlFor="required">
                             Required
                         </FormLabel>
                         <Switch
-                            size="md"
+                            size="sm"
                             colorScheme="primary"
                             isChecked={formValues.isRequired}
                             onChange={() => updateFormValue('isRequired', !formValues.isRequired)}
                         />
                     </FormControl>
 
+                    {formValues.options != null && (
+                        <FormControl my={4} pb={4} borderBottomWidth={1}>
+                            <FormLabel fontSize="0.86rem" mb={2} htmlFor="required">
+                                Response options
+                            </FormLabel>
+                            <OptionsEditor value={formValues.options} onChange={(val) => updateFormValue('options', val)} />
+                        </FormControl>
+                    )}
+
                     {formValues.isMultiple != null && (
                         <FormControl my={4} pb={4} display="flex" alignItems="center" justifyContent="space-between" borderBottomWidth={1}>
-                            <FormLabel mb="0" htmlFor="required">
+                            <FormLabel fontSize="0.86rem" mb="0" htmlFor="required">
                                 Multiple selection
                             </FormLabel>
                             <Switch
-                                size="md"
+                                size="sm"
                                 colorScheme="primary"
                                 isChecked={formValues.isMultiple}
                                 onChange={() => updateFormValue('isMultiple', !formValues.isMultiple)}
@@ -144,7 +154,7 @@ const FieldEditor: FC<FieldEditorProps> = ({ field, setField, deleteField, formD
 
                     {formValues.anchorLabelLeft != null && (
                         <FormControl my={4} pb={4} borderBottomWidth={1}>
-                            <FormLabel mb={2} htmlFor="required">
+                            <FormLabel fontSize="0.86rem" mb={2} htmlFor="required">
                                 Anchors
                             </FormLabel>
                             <DebouncedTextArea
@@ -164,11 +174,11 @@ const FieldEditor: FC<FieldEditorProps> = ({ field, setField, deleteField, formD
 
                     {formValues.isSlider != null && (
                         <FormControl my={4} pb={4} display="flex" alignItems="center" justifyContent="space-between" borderBottomWidth={1}>
-                            <FormLabel mb="0" htmlFor="required">
+                            <FormLabel fontSize="0.86rem" mb="0" htmlFor="required">
                                 Slider
                             </FormLabel>
                             <Switch
-                                size="md"
+                                size="sm"
                                 colorScheme="primary"
                                 isChecked={formValues.isSlider}
                                 onChange={() => updateFormValue('isSlider', !formValues.isSlider)}
@@ -178,12 +188,13 @@ const FieldEditor: FC<FieldEditorProps> = ({ field, setField, deleteField, formD
 
                     {formValues.min != null && (
                         <FormControl my={4} pb={4} borderBottomWidth={1}>
-                            <FormLabel mb={2} htmlFor="required">
+                            <FormLabel fontSize="0.86rem" mb={2} htmlFor="required">
                                 Min and max value
                             </FormLabel>
                             <HStack spacing={2}>
                                 <NumberInput
                                     bg="white"
+                                    size="sm"
                                     value={formValues.min.toFixed(0)}
                                     onChange={(e) => updateFormValue('min', parseInt(e))}
                                     max={formValues.max}
@@ -196,6 +207,7 @@ const FieldEditor: FC<FieldEditorProps> = ({ field, setField, deleteField, formD
                                 </NumberInput>
                                 <NumberInput
                                     bg="white"
+                                    size="sm"
                                     value={formValues.max.toFixed(0)}
                                     onChange={(e) => updateFormValue('max', parseInt(e))}
                                     min={formValues.min}
@@ -214,11 +226,11 @@ const FieldEditor: FC<FieldEditorProps> = ({ field, setField, deleteField, formD
                         <>
                             <Box borderBottomWidth={1} mb={2}>
                                 <FormControl mt={4} pb={4} display="flex" alignItems="center" justifyContent="space-between">
-                                    <FormLabel mb="0" htmlFor="required">
+                                    <FormLabel fontSize="0.86rem" mb="0" htmlFor="required">
                                         Minimum length
                                     </FormLabel>
                                     <Switch
-                                        size="md"
+                                        size="sm"
                                         colorScheme="primary"
                                         isChecked={formValues.minLength !== undefined}
                                         onChange={() => updateFormValue('minLength', formValues.minLength === undefined ? 0 : undefined)}
@@ -229,6 +241,7 @@ const FieldEditor: FC<FieldEditorProps> = ({ field, setField, deleteField, formD
                                     <NumberInput
                                         mb={4}
                                         bg="white"
+                                        size="sm"
                                         value={formValues.minLength.toFixed(0)}
                                         onChange={(e) => updateFormValue('minLength', parseInt(e))}
                                         min={formValues.minLength}
@@ -243,11 +256,11 @@ const FieldEditor: FC<FieldEditorProps> = ({ field, setField, deleteField, formD
                             </Box>
                             <Box borderBottomWidth={1} mb={2}>
                                 <FormControl mt={4} pb={4} display="flex" alignItems="center" justifyContent="space-between">
-                                    <FormLabel mb="0" htmlFor="required">
+                                    <FormLabel fontSize="0.86rem" mb="0" htmlFor="required">
                                         Maximum length
                                     </FormLabel>
                                     <Switch
-                                        size="md"
+                                        size="sm"
                                         colorScheme="primary"
                                         isChecked={formValues.maxLength !== undefined}
                                         onChange={() => updateFormValue('maxLength', formValues.maxLength === undefined ? 100 : undefined)}
@@ -256,6 +269,7 @@ const FieldEditor: FC<FieldEditorProps> = ({ field, setField, deleteField, formD
 
                                 {formValues.maxLength !== undefined && (
                                     <NumberInput
+                                        size="sm"
                                         mb={4}
                                         bg="white"
                                         value={formValues.maxLength.toFixed(0)}
@@ -274,7 +288,7 @@ const FieldEditor: FC<FieldEditorProps> = ({ field, setField, deleteField, formD
                     )}
 
                     <FormControl my={4} pb={4} borderBottomWidth={1} isInvalid={!!fieldIdError}>
-                        <FormLabel>ID</FormLabel>
+                        <FormLabel fontSize="0.86rem">ID</FormLabel>
                         <DebouncedTextArea
                             bg="white"
                             value={formValues.id}

@@ -29,14 +29,14 @@ const ShortFieldEditor = forwardRef<HTMLElement, ShortFieldEditorProps>(
                     alignItems="flex-start"
                     shadow={isSelected ? 'outline' : ''}
                     onClick={() => setField(field)}
-                    p={4}
+                    p={3}
                     mr={8}
                     ml={4}
                     bg="white"
                     borderRadius={4}
                 >
                     <QuestionTypeLabel {...dragHandleProps} type={mapFormFieldToQuestionType(field)} />
-                    {field.type === 'placeholder' && <Text>Placeholder</Text>}
+                    {field.type === 'placeholder' && <Text p={1}>Placeholder</Text>}
                     {field.type === 'formField' && (
                         <DebouncedTextArea
                             p={1}

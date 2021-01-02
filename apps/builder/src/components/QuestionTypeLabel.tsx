@@ -20,9 +20,9 @@ const getColorAndIcon = (type?: QuestionType | BlockType): { color: string; icon
         case QuestionType.SHORT_TEXT:
             return { color: 'blue', icon: <FaFont size={size} /> };
         case BlockType.PLACEHOLDER:
-            return { color: 'gray', icon: <FaExpand /> };
+            return { color: 'gray', icon: <FaExpand size={size} /> };
         default:
-            return { color: 'blue', icon: <FaPlus /> };
+            return { color: 'blue', icon: <FaPlus size={size} /> };
     }
 };
 

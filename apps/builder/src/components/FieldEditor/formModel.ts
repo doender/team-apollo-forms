@@ -1,4 +1,4 @@
-import { FormField, FormFieldValidation, LikertInputFormField } from '@team-apollo-forms/core';
+import { CheckboxTextInputFormField, FormField, FormFieldValidation, LikertInputFormField, Option } from '@team-apollo-forms/core';
 
 export interface FormModel {
     isRequired: boolean;
@@ -13,6 +13,7 @@ export interface FormModel {
     minLength?: number;
     maxLength?: number;
     id: string;
+    options?: Option[];
 }
 
 export const mapFieldToFormValues = (field: FormField): FormModel => {
@@ -27,6 +28,7 @@ export const mapFieldToFormValues = (field: FormField): FormModel => {
 
     if (field.control === 'checkboxText' || field.control === 'radioText') {
         model.isMultiple = field.control === 'checkboxText';
+        model.options = [...field.options];
     }
 
     if (field.control === 'likert') {
@@ -85,6 +87,10 @@ export const mapFormValuesToField = (field: FormField, values: FormModel): FormF
     }
 
     newField.validations = validations;
+
+    if (values.options != null) {
+        (newField as CheckboxTextInputFormField).options = [...values.options];
+    }
 
     if (values.isMultiple != null) {
         const control = values.isMultiple ? 'checkboxText' : 'radioText';

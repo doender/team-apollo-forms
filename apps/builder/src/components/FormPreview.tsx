@@ -85,10 +85,9 @@ const FormPreview: FC<FormPreviewProps> = ({ formDef, selectedField, setSelected
                         onSelectField={(field, sectionIdx, fieldIdx) => setSelectedField({ field, sectionIdx, fieldIdx })}
                         onAfterSubmit={() => <Heading>Bedankt!</Heading>}
                         onSubmit={(values) => {
-                            console.log('Submitting values:', JSON.stringify(values));
+                            console.log(values);
                             return new Promise((resolve, reject) => {
                                 setTimeout(() => {
-                                    console.log('Done!');
                                     resolve();
                                 }, 1000);
                             });

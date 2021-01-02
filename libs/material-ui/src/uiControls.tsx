@@ -140,7 +140,9 @@ export const MaterialUiControls: FormUiControls = {
                 min={min}
                 max={max}
                 value={value || 0}
-                onChange={(e, value) => onChange(value)}
+                onChange={(e, value) => {
+                    onChange(value);
+                }}
                 name={name}
                 onBlur={onBlur}
             />
@@ -167,12 +169,16 @@ export const MaterialUiControls: FormUiControls = {
     Progress: ({ value, max }) => <LinearProgress variant="determinate" value={100 * (value / max)} />,
 
     PrevButton: ({ onClick, children }) => {
-        return <Button onClick={() => onClick()}>{children}</Button>;
+        return (
+            <Button size="large" onClick={() => onClick()}>
+                {children}
+            </Button>
+        );
     },
 
     NextButton: ({ onClick, isDisabled, children }) => {
         return (
-            <Button variant="contained" color="primary" disabled={isDisabled} onClick={() => onClick()}>
+            <Button size="large" variant="contained" color="primary" disabled={isDisabled} onClick={() => onClick()}>
                 {children}
             </Button>
         );
@@ -180,7 +186,7 @@ export const MaterialUiControls: FormUiControls = {
 
     SubmitButton: ({ isDisabled, isLoading, children }) => {
         return (
-            <Button variant="contained" color="primary" disabled={isDisabled || isLoading} type="submit">
+            <Button size="large" variant="contained" color="primary" disabled={isDisabled || isLoading} type="submit">
                 {children}
             </Button>
         );

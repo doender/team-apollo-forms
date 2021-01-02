@@ -1,6 +1,6 @@
 import debounce from 'lodash.debounce';
 import * as React from 'react';
-import { forwardRef, useCallback, useEffect, useState } from 'react';
+import { forwardRef, useCallback, useState } from 'react';
 
 interface DebouncedInputProps {
     value: string;
@@ -14,12 +14,14 @@ const DebouncedInput = forwardRef<HTMLInputElement, DebouncedInputProps & any>(
         const Component = component;
         const [value, setValue] = useState(defaultValue);
 
-        useEffect(() => {
-            setValue(defaultValue);
-        }, [defaultValue]);
+        // useEffect(() => {
+        //     setValue(defaultValue);
+        // }, [defaultValue]);
 
         const debouncedSave = useCallback(
-            debounce((nextValue) => onChange(nextValue), debounceTime),
+            debounce((nextValue) => {
+                onChange(nextValue);
+            }, debounceTime),
             [defaultValue, onChange]
         );
 
