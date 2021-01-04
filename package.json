@@ -25,7 +25,9 @@
         "dep-graph": "nx dep-graph",
         "help": "nx help",
         "predeploy": "npm run build -- --prod --baseHref=/team-apollo-forms/",
-        "deploy": "gh-pages -d dist/apps/builder"
+        "deploy": "gh-pages -d dist/apps/builder",
+        "cz": "git-cz",
+        "lib-publish": "node ./scripts/publish.js"
     },
     "private": true,
     "dependencies": {
@@ -76,7 +78,9 @@
         "@typescript-eslint/eslint-plugin": "4.3.0",
         "@typescript-eslint/parser": "4.3.0",
         "babel-jest": "26.2.2",
+        "commitizen": "^4.2.2",
         "cypress": "^5.5.0",
+        "cz-conventional-changelog": "^3.3.0",
         "dotenv": "6.2.0",
         "eslint": "7.10.0",
         "eslint-config-prettier": "6.0.0",
@@ -91,5 +95,10 @@
         "ts-node": "~9.1.1",
         "tslint": "~6.1.0",
         "typescript": "~4.0.3"
+    },
+    "config": {
+        "commitizen": {
+            "path": "./node_modules/cz-conventional-changelog"
+        }
     }
 }
