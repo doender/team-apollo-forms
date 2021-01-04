@@ -15,7 +15,7 @@ function deployLib(name, type) {
     console.log(`${name}: new version`, newVersion);
 
     console.log(`${name}: start building`);
-    execSync(`npm run build ${name}`);
+    execSync(`nx build ${name}`);
     console.log(`${name}: library built`);
     console.log('creating tar file');
     const tarFileName = `${name}.tar.gz`;
