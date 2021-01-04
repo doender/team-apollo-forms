@@ -18,7 +18,7 @@ import React from 'react';
 export const MaterialUiControls: FormUiControls = {
     FormField: ({ isInvalid, label, description, errorMsg, children, isRequired }) => {
         return (
-            <FormControl fullWidth error={isInvalid} required={isRequired} style={{ marginTop: '1.5rem', marginBottom: '1.5rem' }}>
+            <FormControl fullWidth error={isInvalid} required={isRequired} style={{ marginBottom: '1.5rem' }}>
                 <FormLabel style={{ marginBottom: '12px' }}>{label}</FormLabel>
                 {description && <FormHelperText dangerouslySetInnerHTML={{ __html: description }} />}
                 {children}

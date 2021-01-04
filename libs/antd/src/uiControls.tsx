@@ -8,7 +8,7 @@ import React from 'react';
 export const AntdControls: FormUiControls = {
     FormField: ({ isInvalid, label, description, errorMsg, children, isRequired }) => {
         return (
-            <div style={{ marginTop: '2.5rem', marginBottom: '2.5rem' }}>
+            <div style={{ marginBottom: '2.0rem' }}>
                 <Form.Item
                     label={label}
                     labelCol={{ span: 24 }}

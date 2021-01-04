@@ -31,7 +31,7 @@ import ResizeTextarea from 'react-textarea-autosize';
 export const ChakraUiControls: FormUiControls = {
     FormField: ({ isInvalid, label, id, description, errorMsg, onFocus, children, isRequired }) => {
         return (
-            <FormControl my={10} isInvalid={isInvalid} onFocus={onFocus} isRequired={isRequired}>
+            <FormControl mb={10} isInvalid={isInvalid} onFocus={onFocus} isRequired={isRequired}>
                 {label && (
                     <FormLabel htmlFor={id} fontWeight={600} fontSize="lg" mb={3}>
                         {label}
