@@ -15,6 +15,7 @@ const DynamicFormSection: React.FC<{
     onBlur?: (field: FormField, fieldIdx: number) => void;
     locale: FormLocale;
 }> = ({ form, section, placeholders, UiControls, onFocus, locale, onBlur }) => {
+    if (!section) return null;
     return (
         <>
             {section.title && (

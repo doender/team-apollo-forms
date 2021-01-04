@@ -22,7 +22,16 @@ const FileUploader: FC<FileUploaderProps> = ({ onFilesSelected, component, accep
     return (
         <>
             <Component onClick={handleClick} />
-            <input type="file" accept={accept} ref={hiddenFileInput} onChange={handleChange} style={{ display: 'none' }} />
+            <input
+                type="file"
+                accept={accept}
+                ref={hiddenFileInput}
+                onChange={(e) => {
+                    handleChange(e);
+                    e.target.value = null;
+                }}
+                style={{ display: 'none' }}
+            />
         </>
     );
 };
