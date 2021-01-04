@@ -46,7 +46,7 @@ jobs:
                   git config user.name "doender"
                   git config user.email "jvandoremalen@gmail.com"
                   git remote set-url origin https://doender:$GITHUB_AUTH_TOKEN@github.com/doender/team-apollo-forms.git
-                  git remote get-url origin
+                  git fetch
 
             - name: Publish NPM packages
               env:
