@@ -1,4 +1,5 @@
 {
     "name": "@team-apollo-forms/antd",
-    "version": "0.0.1"
+    "version": "0.0.1",
+    "author": "Joost van Doremalen"
 }

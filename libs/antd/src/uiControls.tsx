@@ -2,6 +2,9 @@ import { FormUiControls } from '@team-apollo-forms/core';
 import { Button, Checkbox, Form, Input, InputNumber, Progress, Radio, Row, Slider, Typography } from 'antd';
 import React from 'react';
 
+/**
+ * Form UI controls from the Ant Design framework
+ */
 export const AntdControls: FormUiControls = {
     FormField: ({ isInvalid, label, description, errorMsg, children, isRequired }) => {
         return (

@@ -221,9 +221,6 @@ export const ChakraUiControls: FormUiControls = {
     },
 };
 
-/**
- * As recommended by: https://github.com/chakra-ui/chakra-ui/issues/670
- */
 const AutoResizeTextarea: React.FC<any> = React.forwardRef((props, ref) => {
     return (
         <Textarea
