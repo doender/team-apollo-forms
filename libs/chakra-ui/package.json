@@ -1,5 +1,6 @@
 {
     "name": "@team-apollo-forms/chakra-ui",
     "version": "0.0.3",
-    "author": "Joost van Doremalen"
+    "author": "Joost van Doremalen",
+    "license": "MIT"
 }

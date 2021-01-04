@@ -3,5 +3,6 @@
     "version": "0.0.2",
     "author": {
         "name": "Joost van Doremalen"
-    }
+    },
+    "license": "MIT"
 }
