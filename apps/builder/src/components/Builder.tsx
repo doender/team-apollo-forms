@@ -150,7 +150,7 @@ export const Builder: FC = () => {
                 <HStack h="60px" bg="white" w="100%" borderBottomWidth={1} alignItems="center" spacing="auto">
                     <VStack ml={4} spacing={0} alignItems="flex-start">
                         <Heading size="md" color="primary.500">
-                            Form Builder
+                            Survey Builder
                         </Heading>
                     </VStack>
 
