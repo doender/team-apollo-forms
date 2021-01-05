@@ -1,4 +1,11 @@
-import { CheckboxTextInputFormField, FormField, FormFieldValidation, LikertInputFormField, Option } from '@team-apollo-forms/core';
+import {
+    CheckboxTextInputFormField,
+    ComparisonOperatorCondition,
+    FormField,
+    FormFieldValidation,
+    LikertInputFormField,
+    Option,
+} from '@team-apollo-forms/core';
 
 export interface FormModel {
     isRequired: boolean;
@@ -14,6 +21,7 @@ export interface FormModel {
     maxLength?: number;
     id: string;
     options?: Option[];
+    showWhen?: { [key: string]: ComparisonOperatorCondition };
 }
 
 export const mapFieldToFormValues = (field: FormField): FormModel => {
@@ -24,6 +32,7 @@ export const mapFieldToFormValues = (field: FormField): FormModel => {
         isRequired,
         description: field.description,
         label: field.label || '',
+        showWhen: field.showWhen as { [key: string]: ComparisonOperatorCondition },
     };
 
     if (field.control === 'checkboxText' || field.control === 'radioText') {
@@ -56,6 +65,7 @@ export const mapFormValuesToField = (field: FormField, values: FormModel): FormF
     newField.description = values.description;
     newField.label = values.label;
     newField.id = values.id;
+    newField.showWhen = values.showWhen;
 
     // Remove or add required validation
     let validations: FormFieldValidation<any>[] = field.validations != null ? [...field.validations] : [];

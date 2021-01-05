@@ -2,8 +2,6 @@ import {
     Box,
     Button,
     FormControl,
-    FormErrorMessage,
-    FormHelperText,
     FormLabel,
     HStack,
     NumberDecrementStepper,
@@ -14,13 +12,14 @@ import {
     Switch,
     Text,
 } from '@chakra-ui/react';
-import { FormDefinition, FormField, PlaceholderBlock } from '@team-apollo-forms/core';
+import { FormDefinition, FormField, isFormField, PlaceholderBlock } from '@team-apollo-forms/core';
 import * as React from 'react';
 import { FC, useEffect, useState } from 'react';
 import { mapFormFieldToQuestionType, questionMenuOptions } from '../../types';
 import DebouncedTextArea from '../DebouncedTextArea';
 import OptionsEditor from '../OptionsEditor';
 import { QuestionTypeLabel } from '../QuestionTypeLabel';
+import DepFieldEditor from './DepFieldEditor/DepFieldEditor';
 import { FormModel, mapFieldToFormValues, mapFormValuesToField } from './formModel';
 
 export interface FieldEditorProps {
@@ -32,7 +31,6 @@ export interface FieldEditorProps {
 
 const isUniqueFieldId = (formDef: FormDefinition, fieldId: string) => {
     const fieldIds = formDef.sections.map((s) => s.fields.map((field) => field.id)).flat();
-    console.log(fieldIds, fieldId);
     return !fieldIds.includes(fieldId);
 };
 
@@ -41,9 +39,20 @@ const isValidFieldId = (fieldId: string) => {
     return re.test(fieldId);
 };
 
+const getPrevQuestions = (fieldId: string, formDef: FormDefinition): FormField[] => {
+    if (!formDef || !fieldId) return [];
+    const fields = formDef.sections.map((s) => s.fields.filter(isFormField)).flat();
+    const idx = fields.findIndex((f) => f.id === fieldId);
+    if (idx >= 0) {
+        return fields.slice(0, idx);
+    }
+    return [];
+};
+
 const FieldEditor: FC<FieldEditorProps> = ({ field, setField, deleteField, formDef }) => {
     const type = mapFormFieldToQuestionType(field);
     const questionType = questionMenuOptions.find((q) => q.value === type)?.name;
+    const prevQuestions = getPrevQuestions(field.id, formDef);
 
     const [formValues, setFormValues] = useState<FormModel>({
         id: '',
@@ -287,7 +296,7 @@ const FieldEditor: FC<FieldEditorProps> = ({ field, setField, deleteField, formD
                         </>
                     )}
 
-                    <FormControl my={4} pb={4} borderBottomWidth={1} isInvalid={!!fieldIdError}>
+                    {/* <FormControl my={4} pb={4} borderBottomWidth={1} isInvalid={!!fieldIdError}>
                         <FormLabel fontSize="0.86rem">ID</FormLabel>
                         <DebouncedTextArea
                             bg="white"
@@ -309,7 +318,18 @@ const FieldEditor: FC<FieldEditorProps> = ({ field, setField, deleteField, formD
                         />
                         {!fieldIdError && <FormHelperText>This ID uniquely identifies this field</FormHelperText>}
                         <FormErrorMessage>{fieldIdError}</FormErrorMessage>
-                    </FormControl>
+                    </FormControl> */}
+
+                    {prevQuestions.length > 0 && (
+                        <FormControl my={4} pb={4} borderBottomWidth={1}>
+                            <FormLabel fontSize="0.86rem">Display conditions</FormLabel>
+                            <DepFieldEditor
+                                value={formValues.showWhen}
+                                onChange={(val) => updateFormValue('showWhen', val)}
+                                prevQuestions={prevQuestions}
+                            />
+                        </FormControl>
+                    )}
                 </>
             )}
 

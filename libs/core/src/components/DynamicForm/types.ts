@@ -19,7 +19,7 @@ type BooleanFieldValidation = 'required' | 'isTrue' | 'isFalse';
 
 export type ComparisonOperator = '$eq' | '$gt' | '$gte' | '$lt' | '$lte' | '$ne' | '$in' | '$nin';
 export type FormFieldValue = number | number[] | string | string[] | boolean;
-export type ComparisonOperatorClause = { [key in ComparisonOperator]?: FormFieldValue };
+export type ComparisonOperatorCondition = { [key in ComparisonOperator]?: FormFieldValue };
 
 export type Option = { value: string; label: string };
 
@@ -29,7 +29,7 @@ interface BaseFormField {
     label?: string;
     description?: string;
     placeholder?: string;
-    showWhen?: { [key: string]: string | number | ComparisonOperatorClause };
+    showWhen?: { [key: string]: ComparisonOperatorCondition };
 }
 
 export interface TextInputFormField extends BaseFormField {

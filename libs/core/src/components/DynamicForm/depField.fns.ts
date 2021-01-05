@@ -1,4 +1,4 @@
-import { ComparisonOperator, ComparisonOperatorClause, FormField } from './types';
+import { ComparisonOperator, ComparisonOperatorCondition, FormField } from './types';
 
 const compare = <T extends number | string | boolean>(op: ComparisonOperator, a: T, b: T): boolean => {
     switch (op) {
@@ -43,15 +43,9 @@ const isQueryValueMatch = <T extends number | string | boolean>(op: ComparisonOp
     return false;
 };
 
-const matches = (query: string | number | ComparisonOperatorClause, values: string | number | string[] | number[]): boolean => {
-    if (typeof query === 'string') {
-        return values === query || (Array.isArray(values) && (values as string[]).includes(query));
-    } else if (typeof query === 'number') {
-        return values === query || (Array.isArray(values) && (values as number[]).includes(query));
-    } else {
-        const operators = Object.keys(query) as ComparisonOperator[];
-        return operators.every((op) => isQueryValueMatch(op, query[op]!, values));
-    }
+const matches = (query: ComparisonOperatorCondition, values: string | number | string[] | number[]): boolean => {
+    const operators = Object.keys(query) as ComparisonOperator[];
+    return operators.every((op) => isQueryValueMatch(op, query[op], values));
 };
 
 /**
