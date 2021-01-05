@@ -1,41 +1,51 @@
 # Team Apollo Forms
 
-## Development server
+Fully customizable forms in your React app, using your favorite UI component library, built on top of Formik and Yup.
 
-Run `nx serve my-app` for a dev server. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.
+## Features
 
-## Build
+-   Online WYSIWYG form builder
+-   Supports Material UI, Chakra UI, Ant Design or your own components
+-   Customizable locales
 
-Run `nx build my-app` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+## Quickstart
 
-## Running unit tests
+Use the online form builder at https://doender.github.io/team-apollo-forms/ to create your form and export it as JSON.
 
-Run `nx test my-app` to execute the unit tests via [Jest](https://jestjs.io).
+Install the core library and one of the UI control libraries (`material-ui`, `chara-ui`, `antd`):
 
-Run `nx affected:test` to execute the unit tests affected by a change.
+```sh
+npm i @team-apollo-forms/core @team-apollo-forms/material-ui
+```
 
-## Running end-to-end tests
+and use the exported form definition file:
 
-Run `ng e2e my-app` to execute the end-to-end tests via [Cypress](https://www.cypress.io).
+```tsx
+import React from 'react';
 
-Run `nx affected:e2e` to execute the end-to-end tests affected by a change.
+import { MaterialUiControls } from '@team-apollo-forms/material-ui';
+import { DynamicForm, FormDefinition } from '@team-apollo-forms/core';
 
-## Understand your workspace
+import formDef from './forms/form.json';
 
-Run `nx dep-graph` to see a diagram of the dependencies of your projects.
+function App() {
+    const onSubmit = async (values) => {
+        // Do something with form values
+    };
 
-## Further help
+    return (
+        <DynamicForm
+            formDefinition={formDef}
+            UiControls={MaterialUiControls}
+            onSubmit={onSubmit}
+            onAfterSubmit={() => <div>Thank you!</div>}
+        />
+    );
+}
 
-Visit the [Nx Documentation](https://nx.dev) to learn more.
+export default App;
+```
 
-## ☁ Nx Cloud
+## Runing the form builder locally
 
-### Computation Memoization in the Cloud
-
-<p align="center"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-cloud-card.png"></p>
-
-Nx Cloud pairs with Nx in order to enable you to build and test code more rapidly, by up to 10 times. Even teams that are new to Nx can connect to Nx Cloud and start saving time instantly.
-
-Teams using Nx gain the advantage of building full-stack applications with their preferred framework alongside Nx’s advanced code generation and project dependency graph, plus a unified experience for both frontend and backend developers.
-
-Visit [Nx Cloud](https://nx.app/) to learn more.
+Run `nx serve builder` for a dev server. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.
