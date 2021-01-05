@@ -21,6 +21,7 @@ const compare = <T extends number | string | boolean>(op: ComparisonOperator, a:
 
 const isQueryValueMatch = <T extends number | string | boolean>(op: ComparisonOperator, queryValue: T | T[], value: T | T[]): boolean => {
     if (Array.isArray(value) && !Array.isArray(queryValue)) {
+        console.error(value, queryValue, op);
         throw new Error('If form field value is an array, showWhen query clause value should also be an array');
     }
 

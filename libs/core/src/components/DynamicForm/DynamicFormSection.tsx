@@ -24,7 +24,7 @@ const DynamicFormSection: React.FC<{
                         fontSize: '1.875rem',
                         fontWeight: 'bold',
                         lineHeight: 1.2,
-                        padding: '0 2rem 2rem 2.5rem',
+                        padding: '0 2rem 2.5rem 2rem',
                     }}
                 >
                     {renderTemplate(section.title, form.values)}
