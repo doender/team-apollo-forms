@@ -72,7 +72,7 @@ The component to be displayed after a successful form submission
 
 ### `locale?: FormLocale`
 
-Right now both `en` and `nl` are supported. If no locale is passed `en` is used by default. You can also use your own: see [this file](libs/core/src/locales.tsx) for an example.
+Right now both `en` and `nl` are supported. If no locale is passed `en` is used by default. You can also use your own: see [this file](libs/core/src/locales.ts) for an example.
 
 _Note: Please leave a PR when you've implemented another locale!_
 
