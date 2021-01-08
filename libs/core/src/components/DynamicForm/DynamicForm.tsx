@@ -70,7 +70,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                     await onSubmit({ ...values, form: { uuid: formDefinition.uuid, version: formDefinition.version } });
                     setSectionIndex((i) => i + 1);
                 } catch (err) {
-                    const errorMsg = err.message || typeof err === 'string' ? err : JSON.stringify(err);
+                    const errorMsg = err.message || (typeof err === 'string' ? err : JSON.stringify(err));
                     actions.setStatus({ errorMsg });
                     if (errorMsgRef && errorMsgRef.current) {
                         errorMsgRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
