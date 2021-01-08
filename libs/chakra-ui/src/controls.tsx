@@ -1,4 +1,6 @@
 import {
+    Alert,
+    AlertIcon,
     Badge,
     Button,
     Checkbox,
@@ -23,12 +25,12 @@ import {
     Text,
     Textarea,
 } from '@chakra-ui/react';
-import { FormUiControls } from '@team-apollo-forms/core';
+import { FormControls } from '@team-apollo-forms/core';
 import React from 'react';
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import ResizeTextarea from 'react-textarea-autosize';
 
-export const ChakraUiControls: FormUiControls = {
+export const ChakraUiControls: FormControls = {
     FormField: ({ isInvalid, label, id, description, errorMsg, onFocus, children, isRequired }) => {
         return (
             <FormControl mb={10} isInvalid={isInvalid} onFocus={onFocus} isRequired={isRequired}>
@@ -54,6 +56,15 @@ export const ChakraUiControls: FormUiControls = {
                 {children}
                 <FormErrorMessage>{errorMsg}</FormErrorMessage>
             </FormControl>
+        );
+    },
+
+    ErrorMessage: ({ msg }) => {
+        return (
+            <Alert status="error">
+                <AlertIcon />
+                {msg}
+            </Alert>
         );
     },
 

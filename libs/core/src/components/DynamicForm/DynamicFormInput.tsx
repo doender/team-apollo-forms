@@ -1,13 +1,13 @@
 import { FieldInputProps, FormikProps } from 'formik';
 import React from 'react';
 import DebouncedInput from '../DebouncedInput';
-import { FormField, FormFieldValidation, FormUiControls } from './types';
+import { FormControls, FormField, FormFieldValidation } from './types';
 
 interface DynamicFormInputProps {
     item: FormField;
     field: FieldInputProps<any>;
     form: FormikProps<any>;
-    UiControls: FormUiControls;
+    controls: FormControls;
     isInvalid: boolean;
     label?: string;
     id: string;
@@ -25,7 +25,7 @@ export const DynamicFormInput: React.FC<DynamicFormInputProps> = ({
     item,
     field,
     form,
-    UiControls,
+    controls,
     label,
     description,
     errorMsg,
@@ -35,6 +35,7 @@ export const DynamicFormInput: React.FC<DynamicFormInputProps> = ({
     onBlur,
     placeholder,
 }) => {
+    const Controls = controls;
     const props = {
         field,
         form,
@@ -55,43 +56,43 @@ export const DynamicFormInput: React.FC<DynamicFormInputProps> = ({
     };
 
     if (item.control === 'textInput') {
-        if (!UiControls.TextInput) throw Error('TextInput component undefined');
-        return <UiControls.TextInput {...props} />;
+        if (!Controls.TextInput) throw Error('TextInput component undefined');
+        return <Controls.TextInput {...props} />;
     }
 
     if (item.control === 'numberInput') {
-        if (!UiControls.NumberInput) throw Error('NumberInput component undefined');
+        if (!Controls.NumberInput) throw Error('NumberInput component undefined');
         const min = item.validations?.find((val) => val.type === 'min')?.params[0] as number;
         const max = item.validations?.find((val) => val.type === 'max')?.params[0] as number;
-        return <UiControls.NumberInput {...props} min={min || -Infinity} max={max || Infinity} />;
+        return <Controls.NumberInput {...props} min={min || -Infinity} max={max || Infinity} />;
     }
 
     if (item.control === 'textArea') {
-        if (!UiControls.TextareaInput) throw Error('TextAreaInput component undefined');
-        return <UiControls.TextareaInput {...props} />;
+        if (!Controls.TextareaInput) throw Error('TextAreaInput component undefined');
+        return <Controls.TextareaInput {...props} />;
     }
 
     if (item.control === 'likert') {
-        if (!UiControls.LikertInput) throw Error('LikertInput component undefined');
+        if (!Controls.LikertInput) throw Error('LikertInput component undefined');
         const anchorLabels = item.anchorLabels || ['', ''];
-        return <UiControls.LikertInput {...props} anchorLabels={anchorLabels} />;
+        return <Controls.LikertInput {...props} anchorLabels={anchorLabels} />;
     }
 
     if (item.control === 'radioText') {
-        if (!UiControls.RadioTextInput) throw Error('RadioTextInput component undefined');
-        return <UiControls.RadioTextInput options={item.options} {...props} />;
+        if (!Controls.RadioTextInput) throw Error('RadioTextInput component undefined');
+        return <Controls.RadioTextInput options={item.options} {...props} />;
     }
 
     if (item.control === 'checkboxText') {
-        if (!UiControls.CheckboxTextInput) throw Error('CheckboxTextInput component undefined');
-        return <UiControls.CheckboxTextInput {...props} options={item.options} />;
+        if (!Controls.CheckboxTextInput) throw Error('CheckboxTextInput component undefined');
+        return <Controls.CheckboxTextInput {...props} options={item.options} />;
     }
 
     if (item.control === 'slider') {
-        if (!UiControls.SliderInput) throw Error('SliderInput component undefined');
+        if (!Controls.SliderInput) throw Error('SliderInput component undefined');
         const min = item.validations!.find((val) => val.type === 'min')?.params[0] as number;
         const max = item.validations!.find((val: FormFieldValidation<number>) => val.type === 'max')?.params[0] as number;
-        return <DebouncedInput {...props} min={min || 0} max={max || 1000} debounceTime={300} component={UiControls.SliderInput} />;
+        return <DebouncedInput {...props} min={min || 0} max={max || 1000} debounceTime={300} component={Controls.SliderInput} />;
     }
 
     return null;

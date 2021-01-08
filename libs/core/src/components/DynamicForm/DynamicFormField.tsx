@@ -3,15 +3,16 @@ import React from 'react';
 import { FormLocale, FormLocaleKey, renderErrorMsg } from '../../locales';
 import { renderTemplate } from '../../utils/renderTemplate';
 import { DynamicFormInput } from './DynamicFormInput';
-import { FormField, FormFieldValidation, FormUiControls } from './types';
+import { FormControls, FormField, FormFieldValidation } from './types';
 
 const DynamicFormField: React.FC<{
     item: FormField;
-    UiControls: FormUiControls;
+    controls: FormControls;
     onFocus: () => void;
     onBlur: () => void;
     locale: FormLocale;
-}> = ({ item, UiControls, onFocus, locale, onBlur }) => {
+}> = ({ item, controls, onFocus, locale, onBlur }) => {
+    const Controls = controls;
     const validations: FormFieldValidation<any>[] = (item.type === 'formField' ? item.validations : undefined) || [];
     const isRequired = validations.find((val) => val.type === 'required') != null;
     const placeholder = item.placeholder || locale[FormLocaleKey.PLACEHOLDER];
@@ -21,7 +22,7 @@ const DynamicFormField: React.FC<{
         <>
             <Field name={item.id}>
                 {({ field, meta, form }: FieldProps) => (
-                    <UiControls.FormField
+                    <Controls.FormField
                         isRequired={isRequired}
                         id={item.id}
                         onFocus={onFocus}
@@ -45,9 +46,9 @@ const DynamicFormField: React.FC<{
                             item={item}
                             field={field}
                             form={form}
-                            UiControls={UiControls}
+                            controls={controls}
                         />
-                    </UiControls.FormField>
+                    </Controls.FormField>
                 )}
             </Field>
         </>

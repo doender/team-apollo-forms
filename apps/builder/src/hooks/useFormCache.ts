@@ -1,5 +1,6 @@
 import { FormDefinition } from '@team-apollo-forms/core';
 import { useEffect, useState } from 'react';
+import { uuid } from '../utils/id';
 
 const CACHE_NAME = 'json-cache';
 const FORM_URL = '/myform';
@@ -30,6 +31,8 @@ const useFormCache = () => {
             .then((json) => setFormDef(json))
             .catch((_) => {
                 setFormDef({
+                    uuid: uuid(),
+                    version: 0,
                     sections: [
                         {
                             title: 'My New Form',

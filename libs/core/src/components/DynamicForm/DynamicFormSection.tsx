@@ -4,17 +4,17 @@ import { FormLocale } from '../../locales';
 import { renderTemplate } from '../../utils/renderTemplate';
 import { shouldShowFormField } from './depField.fns';
 import DynamicFormField from './DynamicFormField';
-import { FormField, FormSection, FormUiControls, isFormField, isPlaceholder } from './types';
+import { FormControls, FormField, FormSection, isFormField, isPlaceholder } from './types';
 
 const DynamicFormSection: React.FC<{
     form: FormikProps<any>;
     section: FormSection;
     placeholders: any;
-    UiControls: FormUiControls;
+    controls: FormControls;
     onFocus: (field: FormField, fieldIdx: number) => void;
     onBlur?: (field: FormField, fieldIdx: number) => void;
     locale: FormLocale;
-}> = ({ form, section, placeholders, UiControls, onFocus, locale, onBlur }) => {
+}> = ({ form, section, placeholders, controls, onFocus, locale, onBlur }) => {
     if (!section) return null;
     return (
         <>
@@ -43,7 +43,7 @@ const DynamicFormSection: React.FC<{
                             <DynamicFormField
                                 locale={locale}
                                 item={item}
-                                UiControls={UiControls}
+                                controls={controls}
                                 onFocus={() => onFocus(item, idx)}
                                 onBlur={() => onBlur && onBlur(item, idx)}
                             />

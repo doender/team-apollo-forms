@@ -1,11 +1,11 @@
-import { FormUiControls } from '@team-apollo-forms/core';
-import { Button, Checkbox, Form, Input, InputNumber, Progress, Radio, Row, Slider, Typography } from 'antd';
+import { FormControls } from '@team-apollo-forms/core';
+import { Alert, Button, Checkbox, Form, Input, InputNumber, Progress, Radio, Row, Slider, Typography } from 'antd';
 import React from 'react';
 
 /**
  * Form UI controls from the Ant Design framework
  */
-export const AntdControls: FormUiControls = {
+export const AntdControls: FormControls = {
     FormField: ({ isInvalid, label, description, errorMsg, children, isRequired }) => {
         return (
             <div style={{ marginBottom: '2.0rem' }}>
@@ -25,6 +25,10 @@ export const AntdControls: FormUiControls = {
                 </Form.Item>
             </div>
         );
+    },
+
+    ErrorMessage: ({ msg }) => {
+        return <Alert message={msg} type="error" />;
     },
 
     TextInput: ({ placeholder, isRequired, onFocus, value, onChange, onBlur, name }) => {

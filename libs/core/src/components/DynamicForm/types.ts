@@ -112,6 +112,8 @@ export interface FormSection {
 }
 
 export type FormDefinition = {
+    uuid: string;
+    version: number;
     sections: FormSection[];
 };
 
@@ -161,7 +163,8 @@ interface FormFieldProps {
     id: string;
 }
 
-export interface FormUiControls {
+export interface FormControls {
+    ErrorMessage: React.FC<{ msg: string }>;
     FormField: React.FC<FormFieldProps>;
     TextInput?: React.FC<BaseFormUiControlProps<any>>;
     NumberInput?: React.FC<BaseFormUiControlProps<any> & { min: number; max: number }>;

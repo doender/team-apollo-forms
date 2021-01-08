@@ -7,7 +7,7 @@ import {
     TextAreaFormField,
     TextInputFormField,
 } from '@team-apollo-forms/core';
-import nanoid from './utils/nanoid';
+import { uid } from './utils/id';
 
 export enum QuestionType {
     MULTIPLE_CHOICE = 'multiple-choice',
@@ -65,7 +65,7 @@ export const mapFormFieldToQuestionType = (field: FormField | PlaceholderBlock):
 };
 
 export const createQuestion = (questionType: QuestionType | BlockType): FormField | PlaceholderBlock => {
-    const id = `field-${nanoid()}`;
+    const id = `field-${uid()}`;
 
     if (questionType === BlockType.PLACEHOLDER) {
         return { type: 'placeholder', id };

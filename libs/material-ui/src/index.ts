@@ -1,3 +1,3 @@
-import { MaterialUiControls } from './uiControls';
+import { MaterialUiControls } from './controls';
 
 export { MaterialUiControls };

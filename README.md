@@ -30,20 +30,69 @@ import formDef from './forms/form.json';
 
 function App() {
     const onSubmit = async (values) => {
-        // Do something with form values
+        try {
+            // Do something with form values
+        } catch (err) {
+            throw new Error('This will be displayed as an error message');
+        }
     };
 
     return (
         <DynamicForm
             formDefinition={formDef}
-            UiControls={MaterialUiControls}
+            controls={MaterialUiControls}
             onSubmit={onSubmit}
-            onAfterSubmit={() => <div>Thank you!</div>}
+            showAfterSubmit={() => <div>Thank you!</div>}
         />
     );
 }
 
 export default App;
+```
+
+## `DynamicForm` props
+
+### `formDefinition: FormDefinition`
+
+The JSON file exported from the Form Builder.
+
+### `controls: FormControls`
+
+The form control components to be displayed. Typically, you'd use one of the available packages `@team-apollo-forms/material-ui`, `@team-apollo-forms/chakra-ui` and `@team-apollo-forms/antd`, but you can also use your own. See [this file](libs/material-ui/src/controls.tsx) for the Material UI example.
+
+_Note: Please leave a PR when you've implemented another UI library!_
+
+### `onSubmit: (values: { [key: string]: any }) => Promise<void>`
+
+Callback to handle the submitted form values, e.g. sending them to your API. Any error thrown here will be shown as an error message.
+
+### `showAfterSubmit: (form: FormikProps<any>) => React.ReactChild`
+
+The component to be displayed after a successful form submission
+
+### `locale?: FormLocale`
+
+Right now both `en` and `nl` are supported. If no locale is passed `en` is used by default. You can also use your own: see [this file](libs/core/src/locales.tsx) for an example.
+
+_Note: Please leave a PR when you've implemented another locale!_
+
+### `placeholders?: { [key: string]: (form: FormikProps<any>) => React.ReactChild; }`
+
+In the Form Builder you can add placeholders, which you can fill with any component you'd like. This is handy for displaying things like images and video _between_ questions. You can also let these depend on the form state and its values:
+
+```tsx
+<DynamicForm
+    formDefinition={formDef}
+    controls={MaterialUiControls}
+    onSubmit={onSubmit}
+    placeholders={{
+        placeholder1: () => <img src="path/to/1.jpg" />,
+        placeholder2: form => form.values.field1 === 'X' ? <div>Displayed when field1 is X</div> : null
+
+            }
+        }
+    }
+/>
 ```
 
 ## Runing the form builder locally

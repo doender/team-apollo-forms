@@ -1,3 +1,3 @@
-import { ChakraUiControls } from './uiControls';
+import { ChakraUiControls } from './controls';
 
 export { ChakraUiControls };

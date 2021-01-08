@@ -80,10 +80,10 @@ const FormPreview: FC<FormPreviewProps> = ({ formDef, selectedField, setSelected
                 <Box bg="white" overflow="hidden">
                     <DynamicForm
                         formDefinition={formDef}
-                        UiControls={uiControls}
+                        controls={uiControls}
                         selectedField={selectedField}
                         onSelectField={(field, sectionIdx, fieldIdx) => setSelectedField({ field, sectionIdx, fieldIdx })}
-                        onAfterSubmit={() => <Heading>Bedankt!</Heading>}
+                        showAfterSubmit={() => <Heading>Bedankt!</Heading>}
                         onSubmit={(values) => {
                             console.log(values);
                             return new Promise((resolve, reject) => {

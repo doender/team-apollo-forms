@@ -2,7 +2,7 @@ import { CloseIcon } from '@chakra-ui/icons';
 import { Button, Flex, HStack, IconButton } from '@chakra-ui/react';
 import { Option } from '@team-apollo-forms/core';
 import React, { FC } from 'react';
-import nanoid from '../utils/nanoid';
+import { uid } from '../utils/id';
 import DebouncedTextArea from './DebouncedTextArea';
 
 interface OptionsEditorProps {
@@ -18,7 +18,7 @@ const OptionsEditor: FC<OptionsEditorProps> = ({ value, onChange }) => {
     };
 
     const addOption = () => {
-        const newValue = [...value, { label: '', value: `option-${nanoid()}` }];
+        const newValue = [...value, { label: '', value: `option-${uid()}` }];
         onChange(newValue);
     };
 

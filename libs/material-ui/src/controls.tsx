@@ -12,10 +12,11 @@ import {
     RadioGroup,
     Slider,
 } from '@material-ui/core';
-import { FormUiControls } from '@team-apollo-forms/core';
+import { Alert } from '@material-ui/lab';
+import { FormControls } from '@team-apollo-forms/core';
 import React from 'react';
 
-export const MaterialUiControls: FormUiControls = {
+export const MaterialUiControls: FormControls = {
     FormField: ({ isInvalid, label, description, errorMsg, children, isRequired }) => {
         return (
             <FormControl fullWidth error={isInvalid} required={isRequired} style={{ marginBottom: '2rem' }}>
@@ -25,6 +26,10 @@ export const MaterialUiControls: FormUiControls = {
                 {isInvalid && <FormHelperText>{errorMsg}</FormHelperText>}
             </FormControl>
         );
+    },
+
+    ErrorMessage: ({ msg }) => {
+        return <Alert severity="error">{msg}</Alert>;
     },
 
     TextInput: ({ placeholder, isRequired, isInvalid, value, onFocus, name, onChange, onBlur }) => {

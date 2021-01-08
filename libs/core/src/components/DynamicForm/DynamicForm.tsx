@@ -1,35 +1,37 @@
 import { Form as FormikForm, Formik, FormikProps } from 'formik';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import * as yup from 'yup';
 import { en, FormLocale, FormLocaleKey } from '../../locales';
 import DynamicFormSection from './DynamicFormSection';
-import { FormDefinition, FormField, FormSection, FormUiControls, isFormField, PlaceholderBlock } from './types';
+import { FormControls, FormDefinition, FormField, FormSection, isFormField, PlaceholderBlock } from './types';
 import { createYupSchema } from './yupSchemaCreator';
 
 export interface DynamicFormProps {
     formDefinition: FormDefinition;
+    controls: FormControls;
+    showAfterSubmit: (form: FormikProps<any>) => React.ReactChild;
+    onSubmit: (values: { [key: string]: any }) => Promise<void>;
+    locale?: FormLocale;
     placeholders?: {
         [key: string]: (form: FormikProps<any>) => React.ReactChild;
     };
-    UiControls: FormUiControls;
     selectedField?: FormField | PlaceholderBlock;
     onSelectField?: (formField: FormField | PlaceholderBlock, sectionIdx: number, fieldIdx: number) => void;
-    onAfterSubmit: (form: FormikProps<any>) => React.ReactChild;
-    onSubmit: (values: { [key: string]: any }) => Promise<void>;
-    locale?: FormLocale;
 }
 
 const DynamicForm: React.FC<DynamicFormProps> = ({
     formDefinition,
     placeholders,
-    UiControls,
+    controls,
     selectedField,
     onSelectField,
     onSubmit,
-    onAfterSubmit,
+    showAfterSubmit,
     locale,
 }) => {
+    const Controls = controls;
     const [sectionIndex, setSectionIndex] = useState(0);
+    const errorMsgRef = useRef<HTMLDivElement>();
 
     useEffect(() => {
         scrollToTop();
@@ -63,20 +65,30 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
             enableReinitialize={true}
             isInitialValid={true}
             onSubmit={async (values, actions) => {
-                await onSubmit(values);
-                actions.setSubmitting(false);
-                setSectionIndex((i) => i + 1);
+                actions.setStatus();
+                try {
+                    await onSubmit({ ...values, form: { uuid: formDefinition.uuid, version: formDefinition.version } });
+                    setSectionIndex((i) => i + 1);
+                } catch (err) {
+                    const errorMsg = err.msg || typeof err === 'string' ? err : JSON.stringify(err);
+                    actions.setStatus({ errorMsg });
+                    if (errorMsgRef && errorMsgRef.current) {
+                        errorMsgRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    }
+                } finally {
+                    actions.setSubmitting(false);
+                }
             }}
         >
             {(props) => (
                 <FormikForm>
                     {formDefinition.sections.length > 1 && onSectionScreen(sectionIndex, formDefinition) && (
-                        <UiControls.Progress value={sectionIndex + 1} max={formDefinition.sections.length} />
+                        <Controls.Progress value={sectionIndex + 1} max={formDefinition.sections.length} />
                     )}
                     <div style={{ paddingTop: '2rem', paddingBottom: '2rem' }}>
                         {onSectionScreen(sectionIndex, formDefinition) && (
                             <DynamicFormSection
-                                UiControls={UiControls}
+                                controls={controls}
                                 form={props}
                                 placeholders={placeholders}
                                 locale={locale}
@@ -84,7 +96,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                                 section={formDefinition.sections[sectionIndex]}
                             />
                         )}
-                        {onOutroScreen(sectionIndex, formDefinition) && <div style={{ padding: '24px' }}>{onAfterSubmit(props)}</div>}
+                        {onOutroScreen(sectionIndex, formDefinition) && <div style={{ padding: '24px' }}>{showAfterSubmit(props)}</div>}
                     </div>
 
                     <div
@@ -98,27 +110,40 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                     >
                         <div>
                             {sectionIndex > 0 && onSectionScreen(sectionIndex, formDefinition) && (
-                                <UiControls.PrevButton onClick={() => goToPrevSection()}>
+                                <Controls.PrevButton onClick={() => goToPrevSection()}>
                                     {locale[FormLocaleKey.PREVIOUS]}
-                                </UiControls.PrevButton>
+                                </Controls.PrevButton>
                             )}
                         </div>
                         <div>
                             {onSectionScreen(sectionIndex, formDefinition) &&
                                 (onLastSectionScreen(sectionIndex, formDefinition) ? (
-                                    <UiControls.SubmitButton isDisabled={!props.isValid} isLoading={props.isSubmitting}>
+                                    <Controls.SubmitButton isDisabled={!props.isValid} isLoading={props.isSubmitting}>
                                         {locale[FormLocaleKey.SUBMIT]}
-                                    </UiControls.SubmitButton>
+                                    </Controls.SubmitButton>
                                 ) : (
-                                    <UiControls.NextButton
+                                    <Controls.NextButton
                                         onClick={() => goToNextSection()}
                                         isDisabled={!canContinueToNextSection(formDefinition.sections[sectionIndex], props)}
                                     >
                                         {locale[FormLocaleKey.NEXT]}
-                                    </UiControls.NextButton>
+                                    </Controls.NextButton>
                                 ))}
                         </div>
                     </div>
+                    {props.status && props.status.errorMsg && (
+                        <div
+                            style={{
+                                padding: '0 2rem 2rem',
+                                display: 'flex',
+                                justifyContent: 'flex-end',
+                                width: '100% ',
+                            }}
+                            ref={errorMsgRef}
+                        >
+                            <Controls.ErrorMessage msg={props.status.errorMsg} />
+                        </div>
+                    )}
                 </FormikForm>
             )}
         </Formik>

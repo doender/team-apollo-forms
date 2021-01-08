@@ -1,3 +1,3 @@
-import { AntdControls } from './uiControls';
+import { AntdControls } from './controls';
 
 export { AntdControls };
