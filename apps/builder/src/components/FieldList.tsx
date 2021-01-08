@@ -65,7 +65,7 @@ const FieldList: FC<FieldListProps> = ({ formDef, addQuestion, onDragEnd, select
                                             {section.fields.length > 0 ? (
                                                 <>
                                                     {sectionIdx > 0 && (
-                                                        <Menu>
+                                                        <Menu modifiers={{ name: 'eventListeners', options: { scroll: false } } as any}>
                                                             <MenuButton
                                                                 w={6}
                                                                 as={Button}

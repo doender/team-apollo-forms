@@ -32,7 +32,13 @@ const QuestionSelectMenu: FC<{ trigger?: ReactElement; onSelect: (type: Question
 
     return (
         <>
-            <Popover isOpen={isOpen} onOpen={onOpen} onClose={onClose} {...props}>
+            <Popover
+                isOpen={isOpen}
+                onOpen={onOpen}
+                onClose={onClose}
+                modifiers={{ name: 'eventListeners', options: { scroll: false } } as any}
+                {...props}
+            >
                 <PopoverTrigger>
                     {trigger !== undefined ? (
                         trigger
