@@ -12,7 +12,7 @@ Fully customizable forms in your React app, using your favorite UI component lib
 
 Use the online form builder at https://doender.github.io/team-apollo-forms/ to create your form and export it as JSON.
 
-Install the core library and one of the UI control libraries (`material-ui`, `chara-ui`, `antd`):
+Install the core library and one of the UI control libraries (`material-ui`, `chakra-ui`, `antd`):
 
 ```sh
 npm i @team-apollo-forms/core @team-apollo-forms/material-ui
