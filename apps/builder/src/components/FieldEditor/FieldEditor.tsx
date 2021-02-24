@@ -126,6 +126,35 @@ const FieldEditor: FC<FieldEditorProps> = ({ field, setField, deleteField, formD
                         )}
                     </Box>
 
+                    {['textInput', 'textArea'].includes(field.control) && (
+                        <>
+                            <Box borderBottomWidth={1}>
+                                <FormControl mt={4} pb={4} display="flex" alignItems="center" justifyContent="space-between">
+                                    <FormLabel fontSize="0.86rem" mb="0" htmlFor="required">
+                                        Placeholder
+                                    </FormLabel>
+                                    <Switch
+                                        size="sm"
+                                        colorScheme="primary"
+                                        isChecked={formValues.placeholder !== undefined}
+                                        onChange={() =>
+                                            updateFormValue('placeholder', formValues.placeholder === undefined ? '' : undefined)
+                                        }
+                                    />
+                                </FormControl>
+
+                                {formValues.placeholder !== undefined && (
+                                    <DebouncedTextArea
+                                        bg="white"
+                                        value={formValues.placeholder}
+                                        placeholder="Type your placeholder here"
+                                        onChange={(e) => updateFormValue('placeholder', e.target.value)}
+                                    />
+                                )}
+                            </Box>
+                        </>
+                    )}
+
                     <FormControl my={4} pb={4} display="flex" alignItems="center" justifyContent="space-between" borderBottomWidth={1}>
                         <FormLabel fontSize="0.86rem" mb="0" htmlFor="required">
                             Required

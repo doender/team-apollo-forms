@@ -101,8 +101,8 @@ export const createQuestion = (questionType: QuestionType | BlockType): FormFiel
             control: 'radioText',
             validationType: 'string',
             options: [
-                { label: 'Yes', value: 'yes' },
-                { label: 'No', value: 'no' },
+                { label: 'Yes', value: `option-${uid()}` },
+                { label: 'No', value: `option-${uid()}` },
             ],
         } as RadioTextInputFormField;
     } else if (questionType === QuestionType.NUMBER) {

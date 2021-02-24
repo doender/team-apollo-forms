@@ -10,6 +10,7 @@ import {
 export interface FormModel {
     isRequired: boolean;
     description: string | undefined;
+    placeholder?: string;
     label: string;
     isMultiple?: boolean;
     anchorLabelLeft?: string;
@@ -33,6 +34,7 @@ export const mapFieldToFormValues = (field: FormField): FormModel => {
         description: field.description,
         label: field.label || '',
         showWhen: field.showWhen as { [key: string]: ComparisonOperatorCondition },
+        placeholder: field.placeholder,
     };
 
     if (field.control === 'checkboxText' || field.control === 'radioText') {
@@ -63,6 +65,7 @@ export const mapFormValuesToField = (field: FormField, values: FormModel): FormF
     const newField = { ...field };
 
     newField.description = values.description;
+    newField.placeholder = values.placeholder;
     newField.label = values.label;
     newField.id = values.id;
     newField.showWhen = values.showWhen;
