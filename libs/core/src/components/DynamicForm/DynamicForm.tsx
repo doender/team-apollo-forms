@@ -17,7 +17,7 @@ export interface DynamicFormProps {
     };
     selectedField?: FormField | PlaceholderBlock;
     onSelectField?: (formField: FormField | PlaceholderBlock, sectionIdx: number, fieldIdx: number) => void;
-    scrollElementRef?: React.MutableRefObject<HTMLElement>;
+    scrollElementRef?: React.MutableRefObject<HTMLElement | null>;
 }
 
 const DynamicForm: React.FC<DynamicFormProps> = ({
