@@ -17,13 +17,14 @@ import { ChakraUiControls } from '@team-apollo-forms/chakra-ui';
 import { DynamicForm, FormDefinition, FormField, PlaceholderBlock } from '@team-apollo-forms/core';
 import { MaterialUiControls } from '@team-apollo-forms/material-ui';
 import { en, nl } from 'libs/core/src/locales';
-import React, { FC, useState } from 'react';
+import React, { FC, MutableRefObject, useState } from 'react';
 import { FaCog } from 'react-icons/fa';
 
 interface FormPreviewProps {
     formDef: FormDefinition;
     selectedField: FormField | PlaceholderBlock;
     setSelectedField: (field: { field: FormField | PlaceholderBlock; sectionIdx: number; fieldIdx: number }) => void;
+    scrollElementRef?: MutableRefObject<HTMLDivElement>;
 }
 
 const uiControlsMap = {
@@ -37,7 +38,7 @@ const localeMap = {
     en: en,
 };
 
-const FormPreview: FC<FormPreviewProps> = ({ formDef, selectedField, setSelectedField }) => {
+const FormPreview: FC<FormPreviewProps> = ({ formDef, selectedField, setSelectedField, scrollElementRef }) => {
     const [UI, setUI] = useState<string>('chakra');
     const [locale, setLocale] = useState<string>('en');
     const uiControls = uiControlsMap[UI];
@@ -93,6 +94,7 @@ const FormPreview: FC<FormPreviewProps> = ({ formDef, selectedField, setSelected
                             });
                         }}
                         locale={formLocale}
+                        scrollElementRef={scrollElementRef}
                     />
                 </Box>
             </Container>

@@ -1,5 +1,5 @@
 import { Form as FormikForm, Formik, FormikProps } from 'formik';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { MutableRefObject, useEffect, useRef, useState } from 'react';
 import * as yup from 'yup';
 import { en, FormLocale, FormLocaleKey } from '../../locales';
 import DynamicFormSection from './DynamicFormSection';
@@ -17,6 +17,7 @@ export interface DynamicFormProps {
     };
     selectedField?: FormField | PlaceholderBlock;
     onSelectField?: (formField: FormField | PlaceholderBlock, sectionIdx: number, fieldIdx: number) => void;
+    scrollElementRef?: React.MutableRefObject<HTMLElement>;
 }
 
 const DynamicForm: React.FC<DynamicFormProps> = ({
@@ -28,14 +29,15 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
     onSubmit,
     showAfterSubmit,
     locale,
+    scrollElementRef,
 }) => {
     const Controls = controls;
     const [sectionIndex, setSectionIndex] = useState(0);
     const errorMsgRef = useRef<HTMLDivElement>();
 
     useEffect(() => {
-        scrollToTop();
-    }, [sectionIndex]);
+        scrollToTop(scrollElementRef);
+    }, [sectionIndex, scrollElementRef]);
 
     useEffect(() => {
         if (formDefinition && selectedField) {
@@ -186,8 +188,9 @@ const canContinueToNextSection = (section: FormSection, form: FormikProps<any>) 
     return !Object.keys(form.errors).some((fieldId) => fieldIds.includes(fieldId));
 };
 
-const scrollToTop = () => {
-    window.scrollTo({ top: 0 });
+const scrollToTop = (scrollElementRef: MutableRefObject<HTMLElement>) => {
+    const scrollElement = scrollElementRef ? scrollElementRef.current : window;
+    scrollElement.scrollTo({ top: 0 });
 };
 
 const onOutroScreen = (sectionIndex: number, formDef: FormDefinition) => {

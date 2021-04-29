@@ -1,7 +1,7 @@
 import { Box, Button, Heading, HStack, VStack } from '@chakra-ui/react';
 import { FormDefinition, FormField, PlaceholderBlock } from '@team-apollo-forms/core';
 import { produce } from 'immer';
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import { DropResult } from 'react-beautiful-dnd';
 import useFormCache from '../hooks/useFormCache';
 import useFormImportExport from '../hooks/useFormImport';
@@ -30,6 +30,7 @@ export const Builder: FC = () => {
         sectionIdx: number;
         fieldIdx: number;
     }>();
+    const scrollElementRef = useRef<HTMLDivElement>(null);
 
     // Set selected field
     useEffect(() => {
@@ -191,8 +192,13 @@ export const Builder: FC = () => {
                             />
                         </Box>
                     )}
-                    <Box flex="3" height="100%" maxH="calc(100vh - 60px)" overflow="scroll" borderLeftWidth={1}>
-                        <FormPreview formDef={formDef} selectedField={selectedField?.field} setSelectedField={setSelectedField} />
+                    <Box ref={scrollElementRef} flex="3" height="100%" maxH="calc(100vh - 60px)" overflow="scroll" borderLeftWidth={1}>
+                        <FormPreview
+                            scrollElementRef={scrollElementRef}
+                            formDef={formDef}
+                            selectedField={selectedField?.field}
+                            setSelectedField={setSelectedField}
+                        />
                     </Box>
                 </HStack>
             </VStack>
