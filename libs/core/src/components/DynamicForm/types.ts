@@ -176,5 +176,5 @@ export interface FormControls {
     Progress: React.FC<{ value: number; max: number }>;
     PrevButton: React.FC<{ onClick: () => void }>;
     NextButton: React.FC<{ onClick: () => void; isDisabled?: boolean }>;
-    SubmitButton: React.FC<{ isDisabled: boolean; isLoading: boolean }>;
+    SubmitButton: React.FC<{ isDisabled?: boolean; isLoading?: boolean; onClick?: () => void }>;
 }

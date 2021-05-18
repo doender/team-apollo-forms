@@ -18,6 +18,7 @@ export interface DynamicFormProps {
     selectedField?: FormField | PlaceholderBlock;
     onSelectField?: (formField: FormField | PlaceholderBlock, sectionIdx: number, fieldIdx: number) => void;
     scrollElementRef?: React.MutableRefObject<HTMLElement | null>;
+    isPreview?: boolean;
 }
 
 const DynamicForm: React.FC<DynamicFormProps> = ({
@@ -30,6 +31,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
     showAfterSubmit,
     locale,
     scrollElementRef,
+    isPreview = false,
 }) => {
     const Controls = controls;
     const [sectionIndex, setSectionIndex] = useState(0);
@@ -77,10 +79,10 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
         const fieldIds = section.fields.filter(isFormField).map((field) => field.id);
         const hasErrors = Object.keys(form.errors).some((fieldId) => fieldIds.includes(fieldId));
 
-        if (hasErrors) {
-            focusOnFirstError(fieldIds, form);
-        } else {
+        if (!hasErrors || isPreview) {
             goToNextSection();
+        } else {
+            focusOnFirstError(fieldIds, form);
         }
     };
 
@@ -90,6 +92,10 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
 
     const goToPrevSection = () => {
         setSectionIndex((i) => i - 1);
+    };
+
+    const onPreviewSubmit = () => {
+        setSectionIndex((i) => i + 1);
     };
 
     return (
@@ -153,9 +159,15 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                         <div>
                             {onSectionScreen(sectionIndex, formDefinition) &&
                                 (onLastSectionScreen(sectionIndex, formDefinition) ? (
-                                    <Controls.SubmitButton isDisabled={!props.isValid} isLoading={props.isSubmitting}>
-                                        {locale[FormLocaleKey.SUBMIT]}
-                                    </Controls.SubmitButton>
+                                    isPreview ? (
+                                        <Controls.SubmitButton onClick={() => onPreviewSubmit()}>
+                                            {locale[FormLocaleKey.SUBMIT]}
+                                        </Controls.SubmitButton>
+                                    ) : (
+                                        <Controls.SubmitButton isDisabled={!props.isValid} isLoading={props.isSubmitting}>
+                                            {locale[FormLocaleKey.SUBMIT]}
+                                        </Controls.SubmitButton>
+                                    )
                                 ) : (
                                     <Controls.NextButton onClick={() => onClickNext(props)}>
                                         {locale[FormLocaleKey.NEXT]}

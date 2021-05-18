@@ -223,9 +223,9 @@ export const ChakraUiControls: FormControls = {
         );
     },
 
-    SubmitButton: ({ isDisabled, isLoading, children }) => {
+    SubmitButton: ({ onClick, isDisabled = false, isLoading = false, children }) => {
         return (
-            <Button size="lg" colorScheme="primary" isDisabled={isDisabled} isLoading={isLoading} type="submit">
+            <Button onClick={onClick} size="lg" colorScheme="primary" isDisabled={isDisabled} isLoading={isLoading} type="submit">
                 {children}
             </Button>
         );

@@ -165,9 +165,9 @@ export const AntdControls: FormControls = {
         );
     },
 
-    SubmitButton: ({ isDisabled, isLoading, children }) => {
+    SubmitButton: ({ onClick, isDisabled = false, isLoading = false, children }) => {
         return (
-            <Button size="large" disabled={isDisabled} type="primary" key="submit" loading={isLoading} htmlType="submit">
+            <Button size="large" onClick={onClick} disabled={isDisabled} type="primary" key="submit" loading={isLoading} htmlType="submit">
                 {children}
             </Button>
         );

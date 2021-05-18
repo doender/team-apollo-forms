@@ -189,9 +189,9 @@ export const MaterialUiControls: FormControls = {
         );
     },
 
-    SubmitButton: ({ isDisabled, isLoading, children }) => {
+    SubmitButton: ({ onClick, isDisabled = false, isLoading = false, children }) => {
         return (
-            <Button size="large" variant="contained" color="primary" disabled={isDisabled || isLoading} type="submit">
+            <Button size="large" onClick={onClick} variant="contained" color="primary" disabled={isDisabled || isLoading} type="submit">
                 {children}
             </Button>
         );
