@@ -157,7 +157,7 @@ export const AntdControls: FormControls = {
         );
     },
 
-    NextButton: ({ onClick, isDisabled, children }) => {
+    NextButton: ({ onClick, isDisabled = false, children }) => {
         return (
             <Button size="large" type="primary" disabled={isDisabled} onClick={() => onClick()}>
                 {children}

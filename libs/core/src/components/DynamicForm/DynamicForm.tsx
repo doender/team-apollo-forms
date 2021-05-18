@@ -51,6 +51,39 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
     const validationSchema = getValidationSchema(fields);
     locale = locale || en;
 
+    const focusOnFirstError = (fieldIds: string[], form) => {
+        // Set all fields in section as touched so error messages are shown
+        const touched = fieldIds.reduce((acc, curr) => {
+            acc[curr] = true;
+            return acc;
+        }, {});
+
+        form.setTouched(touched);
+
+        // Focus on first error
+        const firstError = fieldIds.find((fieldId) => Object.keys(form.errors).includes(fieldId));
+        if (!firstError) return;
+        const elements = document.getElementsByName(firstError);
+        if (elements && elements.length > 0) {
+            const element = elements[0];
+            element.focus();
+        }
+    };
+
+    const onClickNext = (form: FormikProps<any>) => {
+        const section = formDefinition.sections[sectionIndex];
+        if (section == null) return;
+
+        const fieldIds = section.fields.filter(isFormField).map((field) => field.id);
+        const hasErrors = Object.keys(form.errors).some((fieldId) => fieldIds.includes(fieldId));
+
+        if (hasErrors) {
+            focusOnFirstError(fieldIds, form);
+        } else {
+            goToNextSection();
+        }
+    };
+
     const goToNextSection = () => {
         setSectionIndex((i) => i + 1);
     };
@@ -124,10 +157,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                                         {locale[FormLocaleKey.SUBMIT]}
                                     </Controls.SubmitButton>
                                 ) : (
-                                    <Controls.NextButton
-                                        onClick={() => goToNextSection()}
-                                        isDisabled={!canContinueToNextSection(formDefinition.sections[sectionIndex], props)}
-                                    >
+                                    <Controls.NextButton onClick={() => onClickNext(props)}>
                                         {locale[FormLocaleKey.NEXT]}
                                     </Controls.NextButton>
                                 ))}

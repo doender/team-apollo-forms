@@ -215,7 +215,7 @@ export const ChakraUiControls: FormControls = {
         );
     },
 
-    NextButton: ({ onClick, isDisabled, children }) => {
+    NextButton: ({ onClick, isDisabled = false, children }) => {
         return (
             <Button isDisabled={isDisabled} rightIcon={<FaArrowRight />} size="lg" onClick={onClick}>
                 {children}

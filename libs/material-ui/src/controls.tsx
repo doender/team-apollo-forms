@@ -181,7 +181,7 @@ export const MaterialUiControls: FormControls = {
         );
     },
 
-    NextButton: ({ onClick, isDisabled, children }) => {
+    NextButton: ({ onClick, isDisabled = false, children }) => {
         return (
             <Button size="large" variant="contained" color="primary" disabled={isDisabled} onClick={() => onClick()}>
                 {children}

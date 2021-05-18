@@ -175,6 +175,6 @@ export interface FormControls {
     TextareaInput?: React.FC<BaseFormUiControlProps<any>>;
     Progress: React.FC<{ value: number; max: number }>;
     PrevButton: React.FC<{ onClick: () => void }>;
-    NextButton: React.FC<{ onClick: () => void; isDisabled: boolean }>;
+    NextButton: React.FC<{ onClick: () => void; isDisabled?: boolean }>;
     SubmitButton: React.FC<{ isDisabled: boolean; isLoading: boolean }>;
 }
