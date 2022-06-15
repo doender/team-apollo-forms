@@ -1,16 +1,16 @@
-# Team Apollo Forms
+# Survey Builder
 
 Fully customizable forms in your React app, using your favorite UI component library, built on top of Formik and Yup.
 
 ## Features
 
 -   Online WYSIWYG form builder
--   Supports Material UI, Chakra UI, Ant Design or your own components
+-   Supports Material UI, Chakra UI, Ant Design or bring your own components
 -   Customizable locales
 
 ## Quickstart
 
-Use the online form builder at https://doender.github.io/team-apollo-forms/ to create your form and export it as JSON.
+Use the online surbey builder at https://doender.github.io/team-apollo-forms/ to create your form and export it as JSON.
 
 Install the core library and one of the UI control libraries (`material-ui`, `chakra-ui`, `antd`):
 
