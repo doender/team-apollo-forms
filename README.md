@@ -88,10 +88,7 @@ In the Form Builder you can add placeholders, which you can fill with any compon
     placeholders={{
         placeholder1: () => <img src="path/to/1.jpg" />,
         placeholder2: form => form.values.field1 === 'X' ? <div>Displayed when field1 is X</div> : null
-
-            }
-        }
-    }
+    }}
 />
 ```
 
